@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="misAssets"/>
-	<classpathentry kind="lib" path="C:/Users/johan/Downloads/motor_v2_gif_solucion/motor_v2_gif_solucion/motor_v3.jar"/>
+	<classpathentry kind="lib" path="motor_v3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
