@@ -41,6 +41,8 @@ public class Assets {
 	public static BufferedImage billBalazo;
 	public static BufferedImage mira;
 	public static BufferedImage fondoPuntaje;
+	public static BufferedImage fondoMinecraft;
+	public static BufferedImage iconosMenu;
 	
 	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
@@ -49,6 +51,8 @@ public class Assets {
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LAS FUENTES DEL JUEGO 
 	public static Font font_maru;
+	public static Font font_minecraft;
+	public static Font font_minecraft12;
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LOS SONIDOS DEL JUEGO 
 	public static Clip background, sonidoDisparo, sonidoExposion;
@@ -61,6 +65,8 @@ public class Assets {
 		billBalazo = Loader.cargarImagen("/assets_juego_disparos/billBalazo.png");
 		mira = Loader.cargarImagen("/assets_juego_disparos/mira.png");
 		fondoPuntaje = Loader.cargarImagen("/assets_juego_disparos/fondoPuntaje.png");
+		fondoMinecraft = Loader.cargarImagen("/assets_juego_disparos/fondoMinecraft.png");
+		
 		 
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
@@ -76,6 +82,8 @@ public class Assets {
 
 		// AQUI SE REALIZA LA CARGA DE LAS FUENTES DEL JUEGO  	
 		 font_maru = Loader.cargarFuente("/assets_juego_disparos/fuente/maru.ttf", 25);
+		 font_minecraft = Loader.cargarFuente("/assets_juego_disparos/fuente/minecraft_font.ttf", 25);
+		 font_minecraft12 = Loader.cargarFuente("/assets_juego_disparos/fuente/minecraft_font.ttf", 12);
 		 
 		// AQUI SE REALIZA LA CARGA DE LOS SONIDOS DEL JUEGO 
 		 background = Loader.cargarSonido("/assets_juego_disparos/sonidos/FinalBattle.wav");

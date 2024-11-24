@@ -2,7 +2,7 @@ package juego;
 
 import java.awt.Graphics;
 
-import juego.escenas.EscenaInicio;
+import juego.escenas.EscenaBienvenida;
 import motor_v1.motor.Entidad;
 import motor_v1.motor.Lienzo;
 import motor_v1.motor.Scene;
@@ -19,7 +19,7 @@ public class Game extends Entidad {
 
 	public Game() {
 		lienzo = new Lienzo(Conf.WIDTH, Conf.HEIGHT, "Juego EXPLOSIONES GIF !");
-		escenaActual = new EscenaInicio();
+		escenaActual = new EscenaBienvenida();
 		Scene.cambiarEscena(escenaActual);
 	}
 	@Override
