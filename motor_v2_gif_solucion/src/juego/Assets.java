@@ -42,7 +42,10 @@ public class Assets {
 	public static BufferedImage mira;
 	public static BufferedImage fondoPuntaje;
 	public static BufferedImage fondoMinecraft;
+	public static BufferedImage fondoCesped;
 	public static BufferedImage iconosMenu;
+	public static BufferedImage jugador;
+	public static BufferedImage flecha;
 	
 	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
@@ -66,7 +69,9 @@ public class Assets {
 		mira = Loader.cargarImagen("/assets_juego_disparos/mira.png");
 		fondoPuntaje = Loader.cargarImagen("/assets_juego_disparos/fondoPuntaje.png");
 		fondoMinecraft = Loader.cargarImagen("/assets_juego_disparos/fondoMinecraft.png");
-		
+		fondoCesped = Loader.cargarImagen("/assets_juego_disparos/fondoCesped.jpeg");
+		jugador = Loader.cargarImagen("/assets_juego_disparos/jugador.png");
+		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
 		 
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
@@ -89,6 +94,7 @@ public class Assets {
 		 background = Loader.cargarSonido("/assets_juego_disparos/sonidos/FinalBattle.wav");
 		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/playerShoot.wav");
 		 sonidoExposion = Loader.cargarSonido("/assets_juego_disparos/sonidos/parry.wav");
+		 
 		
 		return true;
 	}

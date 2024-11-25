@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+
 import juego.Assets;
 import juego.Conf;
 import motor_v1.motor.GameLoop;
@@ -35,12 +36,13 @@ public class EscenaBienvenida extends Scene{
 		Wallpaper();
 		Mensajes();
 		
+		
 	}
 
 	@Override
 	public void actualizar() {
 		if (InputKeyboard.isDown(Key.ENTER)) {
-			Scene.cambiarEscena(new EscenaJuego());
+			Scene.cambiarEscena(new EscenaNivel1());
 		}
 		
 		if (InputKeyboard.isKeyPressed(Key.ESCAPE)) {
@@ -109,16 +111,13 @@ public class EscenaBienvenida extends Scene{
 		johan = new SpriteText("Johan Sanchez Rojas", colorBlanco, Assets.font_minecraft12, false);
 		johan.setPosicion(posicionJohan);
 		
-		
-		
-		
-		
 	}
 	
 	public void Wallpaper() {
 		fondo = new SpriteSolido("minecraft", Assets.fondoMinecraft);
 		
 	}
+	
 	
 	
 	
