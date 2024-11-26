@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoProvisional;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
 import motor_v1.motor.entidades.SpriteMovible;
@@ -17,6 +18,7 @@ import motor_v1.motor.util.Vector2D;
 public class EscenaNivel1 extends Scene{
 	
 	private SpriteSolido fondoNivel;
+	private EnemigoProvisional bill;
 	private Jugador jugador;
 	private Bloque[] bloques = new Bloque[5];
 
@@ -28,6 +30,7 @@ public class EscenaNivel1 extends Scene{
 		Wallpaper();
 		crearJugador();
 		crearBloques();
+		crearEnemigoProvisional();
 		
 		
 		
@@ -38,11 +41,14 @@ public class EscenaNivel1 extends Scene{
 		if (InputKeyboard.isKeyPressed(Key.SHIFT)) {
 			Scene.cambiarEscena(new EscenaBienvenida());
 		}
+		
+		bill.actualizar();
 		fondoNivel.actualizar();
 		jugador.actualizar();
 		actualizarBloques();
 		colisionBloqueJugador();
 		colisionBloqueJugador();
+		siguienteNivel();
 		
 	}
 
@@ -59,6 +65,7 @@ public class EscenaNivel1 extends Scene{
 		jugador.getMira().dibujar(arg0);
 		jugador.getCorazon().dibujar(arg0);
 		jugador.getTextoVidas().dibujar(arg0);
+		bill.dibujar(arg0);
 		dibujarBloques(arg0);
 		
 	}
@@ -70,7 +77,7 @@ public class EscenaNivel1 extends Scene{
 	
 	public void crearJugador() {
 		Vector2D p = new Vector2D(150, Conf.HEIGHT /2);
-		jugador = new Jugador(10);
+		jugador = new Jugador(p, 10);
 	}
 	
 	public void crearBloques() {
@@ -128,7 +135,15 @@ public class EscenaNivel1 extends Scene{
 		
 	}
 	
-	public void mostarVidas() {
+	public void crearEnemigoProvisional() {
+		bill = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT /2));
+		
+	}
+	
+	public void siguienteNivel() {
+		if(jugador.getColisiona().colisionaCon(bill.getColisiona())) {
+			Scene.cambiarEscena(new EscenaNivel2());
+		}
 		
 	}
 	

@@ -45,6 +45,7 @@ public class Assets {
 	public static BufferedImage fondoCesped;
 	public static BufferedImage iconosMenu;
 	public static BufferedImage jugador;
+	public static BufferedImage jugadorEspada;
 	public static BufferedImage flecha;
 	public static BufferedImage madera;
 	public static BufferedImage corazon;
@@ -55,6 +56,7 @@ public class Assets {
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
 	public static BufferedImage[] explosionCanon = new BufferedImage[5];
 	public static BufferedImage[] humoDisparo = new BufferedImage[10];
+	public static BufferedImage[] slash = new BufferedImage[3];
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LAS FUENTES DEL JUEGO 
 	public static Font font_maru;
@@ -75,6 +77,7 @@ public class Assets {
 		fondoMinecraft = Loader.cargarImagen("/assets_juego_disparos/fondoMinecraft.png");
 		fondoCesped = Loader.cargarImagen("/assets_juego_disparos/fondoCesped.jpeg");
 		jugador = Loader.cargarImagen("/assets_juego_disparos/jugador.png");
+		jugadorEspada = Loader.cargarImagen("/assets_juego_disparos/jugadorEspada.png");
 		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
 		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
@@ -91,7 +94,11 @@ public class Assets {
 
 		for(int i = 0; i < humoDisparo.length; i++) {
 			humoDisparo[i] = Loader.cargarImagen("/assets_juego_disparos/humoDisparo/" + (i) +".png");
-		}		 
+		}		
+		
+		for (int i = 0; i < slash.length; i++) {
+			slash[i] = Loader.cargarImagen("/assets_juego_disparos/slash/slash"+ (i) +".png");
+		}
 
 		// AQUI SE REALIZA LA CARGA DE LAS FUENTES DEL JUEGO  	
 		 font_maru = Loader.cargarFuente("/assets_juego_disparos/fuente/maru.ttf", 25);

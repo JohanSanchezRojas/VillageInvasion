@@ -18,7 +18,7 @@ public class Game extends Entidad {
 	private Scene escenaActual;
 
 	public Game() {
-		lienzo = new Lienzo(Conf.WIDTH, Conf.HEIGHT, "Juego EXPLOSIONES GIF !");
+		lienzo = new Lienzo(Conf.WIDTH, Conf.HEIGHT, "Village Invasion");
 		escenaActual = new EscenaBienvenida();
 		Scene.cambiarEscena(escenaActual);
 	}

@@ -2,6 +2,7 @@ package juego.entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.RenderingHints.Key;
 import java.awt.event.MouseAdapter;
 
 import juego.Assets;
@@ -26,19 +27,34 @@ public class Jugador extends Entidad {
 	private int numeroVidas;
 	private Color colorBlanco = new Color(250, 250, 250);
 	double cronometro = 0;
+	private Gif slash;
 
-	public Jugador(int numeroVidas) {
+	public Jugador(Vector2D p, int vidas) {
 		super();
-		cuerpo = new SpriteMovible("Cuerpo", Assets.jugador);
+		cuerpo = new SpriteMovible("Cuerpo", Assets.jugador, p);
 		mira = new Sprite("Mira", Assets.mira);
 		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
-		this.numeroVidas = numeroVidas;
+		this.numeroVidas = vidas;
 		textoVidas = new SpriteText("x "+ numeroVidas, colorBlanco, Assets.font_minecraft, false);
 		textoVidas.setPosicion(new Vector2D(55, 35));
+		//crearAtaqueEspada();
 	}
 
 	@Override
 	public void actualizar() {
+		
+		
+		//if (slash != null) {
+			//slash.actualizar();
+		//}
+		
+		
+		//if (InputMouse.isClicked()) {
+			//crearAtaqueEspada();
+			//destruir();
+		//}
+		
+		
 		movimiento();
 		actualizarMira();
 		rotacion();
@@ -49,6 +65,8 @@ public class Jugador extends Entidad {
 		mira.actualizar();
 		corazon.actualizar();
 		textoVidas.actualizar();
+		cambiarArma();
+		//slash.actualizar();
 	}
 
 	public void jugadorColision(Bloque b) {
@@ -107,7 +125,7 @@ public class Jugador extends Entidad {
 		double desfase = 90;
 		cuerpo.getTransformar().rotarloA(angulo + desfase);
 
-		imprimirDatos(angulo, posicionMouse, centro);
+		//imprimirDatos(angulo, posicionMouse, centro);
 	}
 
 	private void actualizarMira() {
@@ -130,10 +148,51 @@ public class Jugador extends Entidad {
 			cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
 		}
 	}
+	
+	public void cambiarArma() {
+		
+		if (InputKeyboard.isKeyPressed(motor_v1.motor.input.Key.R)) {
+			cuerpo.setTextura(Assets.jugador);
+		}
+		
+		if (InputKeyboard.isKeyPressed(motor_v1.motor.input.Key.F)) {
+			cuerpo.setTextura(Assets.jugadorEspada);
+		}
+		
+		
+	}
+	
+	public void crearAtaqueEspada() {
+		Vector2D p = new Vector2D(100, 100);
+		slash = new Gif(getNombre(), Assets.slash , p, 100);
+		Vector2D centro = slash.getTransformar().getPosicion();
+		
+		Vector2D posicionMouse = new Vector2D(InputMouse.getX(), InputMouse.getY());
+		double angulo = centro.getAnguloHacia(posicionMouse);
+		double desfase = 90;
+		slash.getTransformar().rotarloA(angulo + desfase);
+		
+		slash.setLoop(true);
+		slash.setDestruir(true);
+		
+		
+		
+	}
+	
+	public void ataque() {
+		
+		//if (cuerpo.getTextura() == Assets.jugadorEspada && InputMouse.isClicked()){
+			//crearAtaqueEspada();
+			//destruir();
+			
+		//}
+		
+	}
+	
 
 	@Override
 	public void destruir() {
-		// TODO Auto-generated method stub
+		//slash.destruir();
 
 	}
 
@@ -143,6 +202,7 @@ public class Jugador extends Entidad {
 		cuerpo.dibujar(g);
 		corazon.dibujar(g);
 		textoVidas.dibujar(g);
+		//slash.dibujar(g);
 	}
 
 	public void imprimirDatos(double angulo, Vector2D posicionMouse, Vector2D centro) {
@@ -153,6 +213,7 @@ public class Jugador extends Entidad {
 			cronometro = 0;
 		}
 	}
+	
 
 	public SpriteMovible getCuerpo() {
 		return cuerpo;
