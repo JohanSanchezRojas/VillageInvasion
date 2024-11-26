@@ -6,7 +6,9 @@ public class Conf {
 	public static final int HEIGHT = 800;
 	
 	public static final int JUGADOR_HEIGHT = 82;
-	public static final int jugador_WIDTH = 78;
+	public static final int JUGADOR_WIDTH = 78;
+	
+	public static final int WOOD_LADO = 80;
 	
 
 }

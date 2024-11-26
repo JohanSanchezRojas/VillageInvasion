@@ -46,6 +46,8 @@ public class Assets {
 	public static BufferedImage iconosMenu;
 	public static BufferedImage jugador;
 	public static BufferedImage flecha;
+	public static BufferedImage madera;
+	public static BufferedImage corazon;
 	
 	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
@@ -72,6 +74,8 @@ public class Assets {
 		fondoCesped = Loader.cargarImagen("/assets_juego_disparos/fondoCesped.jpeg");
 		jugador = Loader.cargarImagen("/assets_juego_disparos/jugador.png");
 		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
+		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
+		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
 		 
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
