@@ -70,9 +70,7 @@ public class EscenaNivel1 extends Scene{
 	
 	public void crearJugador() {
 		Vector2D p = new Vector2D(150, Conf.HEIGHT /2);
-		jugador = new Jugador("Jugador", Assets.jugador, p, 5);
-		jugador.getTransformar().setPosicion(p.subtract(jugador.getCentroRotacion()));
-		
+		jugador = new Jugador(10);
 	}
 	
 	public void crearBloques() {
@@ -80,7 +78,6 @@ public class EscenaNivel1 extends Scene{
 		int y = (Conf.HEIGHT / 2) - 160;
 		
 		for (int i = 0; i < bloques.length; i++) {
-			
 			
 			
 			
