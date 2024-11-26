@@ -48,6 +48,8 @@ public class Assets {
 	public static BufferedImage flecha;
 	public static BufferedImage madera;
 	public static BufferedImage corazon;
+	public static BufferedImage instrucciones;
+	public static BufferedImage titulo;
 	
 	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
@@ -76,6 +78,8 @@ public class Assets {
 		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
 		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
+		instrucciones = Loader.cargarImagen("/assets_juego_disparos/instrucciones.jpeg");
+		titulo = Loader.cargarImagen("/assets_juego_disparos/villageInvasion.png");
 		 
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
@@ -91,7 +95,7 @@ public class Assets {
 
 		// AQUI SE REALIZA LA CARGA DE LAS FUENTES DEL JUEGO  	
 		 font_maru = Loader.cargarFuente("/assets_juego_disparos/fuente/maru.ttf", 25);
-		 font_minecraft = Loader.cargarFuente("/assets_juego_disparos/fuente/minecraft_font.ttf", 25);
+		 font_minecraft = Loader.cargarFuente("/assets_juego_disparos/fuente/minecraft_font.ttf", 20);
 		 font_minecraft12 = Loader.cargarFuente("/assets_juego_disparos/fuente/minecraft_font.ttf", 12);
 		 
 		// AQUI SE REALIZA LA CARGA DE LOS SONIDOS DEL JUEGO 

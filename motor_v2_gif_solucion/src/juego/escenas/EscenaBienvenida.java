@@ -20,7 +20,7 @@ import motor_v1.motor.util.Vector2D;
 
 public class EscenaBienvenida extends Scene{
 	
-	private SpriteText mensajeBienvenida;
+	private SpriteSolido titulo;
 	private SpriteText mensajeJuego;
 	private SpriteText mensajeInscribirUsuario;
 	private SpriteText mensajeSalir;
@@ -29,12 +29,15 @@ public class EscenaBienvenida extends Scene{
 	private SpriteText johan;
 	private Color colorBlanco = new Color(250, 250, 250);
 	private SpriteSolido fondo;
+	private SpriteSolido instrucciones;
 	
 	
 	public EscenaBienvenida() {
 		super();
 		Wallpaper();
 		Mensajes();
+		crearInstrucciones();
+		crearTitulo();
 		
 		
 	}
@@ -50,13 +53,14 @@ public class EscenaBienvenida extends Scene{
 		}
 		
 		fondo.actualizar();
-		mensajeBienvenida.actualizar();
+		titulo.actualizar();
 		mensajeJuego.actualizar();
 		mensajeInscribirUsuario.actualizar();
 		mensajeSalir.actualizar();
 		joshua.actualizar();
 		andrew.actualizar();
 		johan.actualizar();
+		instrucciones.actualizar();
 		
 	}
 	
@@ -64,13 +68,14 @@ public class EscenaBienvenida extends Scene{
 	@Override
 	public void dibujar(Graphics g) {
 		fondo.dibujar(g);
-		mensajeBienvenida.dibujar(g);
+		titulo.dibujar(g);
 		mensajeJuego.dibujar(g);
 		mensajeInscribirUsuario.dibujar(g);
 		mensajeSalir.dibujar(g);
 		joshua.dibujar(g);
 		andrew.dibujar(g);
 		johan.dibujar(g);
+		instrucciones.dibujar(g);
 		
 	}
 
@@ -82,10 +87,6 @@ public class EscenaBienvenida extends Scene{
 	//OTROS METODOS
 	
 	public void Mensajes() {
-		
-		Vector2D posicionTitulo = new Vector2D((Conf.WIDTH /2), (Conf.HEIGHT / 2) / 2);
-		mensajeBienvenida = new SpriteText("Village Invasion", colorBlanco, Assets.font_minecraft, false);
-		mensajeBienvenida.setPosicion(posicionTitulo);
 		
 		Vector2D posicionJugar = new Vector2D(10, (Conf.HEIGHT / 2) - 100);
 		mensajeJuego = new SpriteText("Ingresar al Juego (ENTER)", colorBlanco, Assets.font_minecraft, false);
@@ -117,6 +118,24 @@ public class EscenaBienvenida extends Scene{
 		fondo = new SpriteSolido("minecraft", Assets.fondoMinecraft);
 		
 	}
+	
+	public void crearInstrucciones() {
+		Vector2D p = new Vector2D((Conf.WIDTH /1.4) , (Conf.HEIGHT / 2));
+		instrucciones = new SpriteSolido("instrucciones", Assets.instrucciones, p);
+		instrucciones.getTransformar().setPosicion(p.subtract(instrucciones.getCentroRotacion()));
+		
+	}
+	
+	public void crearTitulo() {
+		Vector2D posicionTitulo = new Vector2D((Conf.WIDTH /2), 100);
+		titulo = new SpriteSolido("Village Invasion", Assets.titulo, posicionTitulo);
+		titulo.getTransformar().setPosicion(posicionTitulo.subtract(titulo.getCentroRotacion()));
+		
+	}
+	
+	
+	
+	
 	
 	
 	

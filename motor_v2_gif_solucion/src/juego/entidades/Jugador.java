@@ -35,6 +35,7 @@ public class Jugador extends SpriteMovible{
 	}
 	
 	public void actualizar() {
+
 		
 		movimiento();
 		limite();
@@ -77,6 +78,7 @@ public class Jugador extends SpriteMovible{
 		Vector2D p = new Vector2D(InputMouse.getX(), InputMouse.getY());
 		mira = new SpriteMovible("mira", Assets.mira, p);
 		mira.getTransformar().setPosicion(p.subtract(mira.getCentroRotacion()));
+		
 		
 	}
 	

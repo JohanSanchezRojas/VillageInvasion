@@ -10,6 +10,8 @@ public class Conf {
 	
 	public static final int WOOD_LADO = 80;
 	
+	//Prueba Andrew
+	public static final double ANGULO_ROTACION = 0.1;
 
 }
 
