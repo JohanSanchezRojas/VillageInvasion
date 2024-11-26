@@ -8,6 +8,8 @@ public class Conf {
 	public static final int JUGADOR_HEIGHT = 82;
 	public static final int jugador_WIDTH = 78;
 	
+	//Prueba Andrew
+	public static final double ANGULO_ROTACION = 0.1;
 
 }
 

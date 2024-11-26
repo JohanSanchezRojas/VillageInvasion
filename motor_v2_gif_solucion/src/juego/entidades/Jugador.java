@@ -34,7 +34,7 @@ public class Jugador extends SpriteMovible{
 			movimiento.setDireccion(Vector2D.LEFT);
 			movimiento.mover(transformar, FACTOR_VELOCIDAD * GameLoop.dt);
 			
-		}if(InputKeyboard.isDown(motor_v1.motor.input.Key.W)) {
+		}if(InputKeyboard.isDown(motor_v1.motor.input.Key.Q)) {
 			movimiento.setDireccion(Vector2D.UP);
 			movimiento.mover(transformar, FACTOR_VELOCIDAD * GameLoop.dt);
 			
