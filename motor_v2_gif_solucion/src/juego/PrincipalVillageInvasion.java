@@ -3,7 +3,7 @@ package juego;
 
 import motor_v1.motor.GameLoop;
 
-public class PrincipalJuegoDisparos {
+public class PrincipalVillageInvasion {
 
 	public static void main(String[] args) {
 /**********************************************************
