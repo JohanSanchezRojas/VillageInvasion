@@ -8,6 +8,9 @@ public class Conf {
 	public static final int JUGADOR_HEIGHT = 82;
 	public static final int JUGADOR_WIDTH = 78;
 	
+	public static final int FLECHA_HEIGHT = 32;
+	public static final int FLECHA_WIDTH = 8;
+	
 	public static final int WOOD_LADO = 80;
 	
 	//Prueba Andrew
