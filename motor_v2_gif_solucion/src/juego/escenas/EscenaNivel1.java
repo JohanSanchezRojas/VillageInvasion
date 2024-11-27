@@ -21,7 +21,7 @@ public class EscenaNivel1 extends Scene{
 	private EnemigoProvisional bill;
 	private Jugador jugador;
 	private Bloque[] bloques = new Bloque[5];
-
+	private EnemigoBallesta enemigoB;
 	
 	
 	
@@ -31,7 +31,7 @@ public class EscenaNivel1 extends Scene{
 		crearJugador();
 		crearBloques();
 		crearEnemigoProvisional();
-		
+		crearEnemigos();
 		
 		
 	}
@@ -67,7 +67,7 @@ public class EscenaNivel1 extends Scene{
 		jugador.getTextoVidas().dibujar(arg0);
 		bill.dibujar(arg0);
 		dibujarBloques(arg0);
-		
+		enemigoB.dibujar(arg0);
 	}
 	
 	public void Wallpaper() {
@@ -80,6 +80,11 @@ public class EscenaNivel1 extends Scene{
 		jugador = new Jugador(p, 10);
 	}
 	
+	public void crearEnemigos() {
+		Vector2D p = new Vector2D(300, Conf.HEIGHT /2);
+		enemigoB = new EnemigoBallesta();
+		
+	}
 	public void crearBloques() {
 		Bloque bloque;
 		int y = (Conf.HEIGHT / 2) - 160;
