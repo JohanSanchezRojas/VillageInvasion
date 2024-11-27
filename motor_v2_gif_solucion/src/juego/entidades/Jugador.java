@@ -5,12 +5,14 @@ import java.awt.Graphics;
 import java.awt.RenderingHints.Key;
 import java.awt.event.MouseAdapter;
 import java.awt.geom.RoundRectangle2D.Double;
+import java.util.Vector;
 
 import juego.Assets;
 import juego.Conf;
 import motor_v1.motor.Entidad;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
+import motor_v1.motor.component.Movement;
 import motor_v1.motor.entidades.Gif;
 import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.Sprite;
@@ -30,6 +32,8 @@ public class Jugador extends Entidad {
 	private Color colorBlanco = new Color(250, 250, 250);
 	double cronometro = 0;
 	private Gif slash;
+	private Flecha flecha;
+	public ListaEntidades flechas;
 
 	public Jugador(Vector2D p, int vidas) {
 		super();
@@ -37,30 +41,92 @@ public class Jugador extends Entidad {
 		mira = new Sprite("Mira", Assets.mira);
 		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
 		this.numeroVidas = vidas;
-		textoVidas = new SpriteText("x "+ numeroVidas, colorBlanco, Assets.font_minecraft, false);
+		textoVidas = new SpriteText("x " + numeroVidas, colorBlanco, Assets.font_minecraft, false);
 		textoVidas.setPosicion(new Vector2D(55, 35));
-		//crearAtaqueEspada();
+		flechas = new ListaEntidades();
+		// crearAtaqueEspada();
+	}
+
+	private void destruirFlecha(Flecha flecha) {
+		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH - Conf.FLECHA_HEIGHT) {
+			System.out.println("1");
+			flecha.destruir();
+		} else if (flecha.getTransformar().getPosicion().getX() < 0) {
+			System.out.println("2");
+			flecha.destruir();
+		}
+
+		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT - Conf.FLECHA_WIDTH) {
+			System.out.println("3");
+			flecha.destruir();
+		} else if (flecha.getTransformar().getPosicion().getY() < 0) {
+			System.out.println("4");
+			flecha.destruir();
+		}
+
+	}
+
+	public void flechaColision(Bloque b, Flecha flecha) {
+
+		if (flecha.getColisiona().colisionaCon(b.getColisiona())) {
+			flecha.destruir();
+		}
 	}
 
 	private void disparar() {
-	    
+		Vector2D centro = cuerpo.getTransformar().getPosicion();
+		Vector2D posicionMouse = new Vector2D(InputMouse.getX(), InputMouse.getY());
+		double angulo = centro.getAnguloHacia(posicionMouse);
+		double desfase = 90;
+		
+		flecha = new Flecha("Flecha", Assets.flecha, centro);
+
+		System.out.println("Flecha metodo");
+
+		flechas.add("Flecha", flecha);
+
+		for (int i = 0; i < flechas.getAll().length; i++) {
+			int j = 0;
+			if (j == i) {
+				flecha.getTransformar().rotarloA(angulo + desfase);
+				flecha.getMovimiento().setDireccion((int) angulo);
+				flecha.getTransformar().setPosicion(centro);
+				j++;
+				System.out.println("Flecha FOR");
+			}
+
+			flecha.getMovimiento().mover(flecha.getTransformar(), 1 * GameLoop.dt);
+		}
 	}
-	
+
 	@Override
 	public void actualizar() {
-		
-		
-		//if (slash != null) {
-			//slash.actualizar();
-		//}
-		
-		
-		//if (InputMouse.isClicked()) {
-			//crearAtaqueEspada();
-			//destruir();
-		//}
-		
-		
+
+		if (InputMouse.isClicked()) {
+			disparar();
+		}
+
+		for (int i = 0; i < flechas.getAll().length; i++) {
+			if (flechas.get(i) != null) {
+				Flecha flechaAux = (Flecha) flechas.get(i);
+
+				flechaAux.getMovimiento().mover(flechaAux.getTransformar(), 0.5 * GameLoop.dt);
+
+				if (flechaAux.getViva()) {
+					destruirFlecha(flechaAux);
+				}
+			}
+		}
+
+		// if (slash != null) {
+		// slash.actualizar();
+		// }
+
+		// if (InputMouse.isClicked()) {
+		// crearAtaqueEspada();
+		// destruir();
+		// }
+
 		movimiento();
 		actualizarMira();
 		rotacion();
@@ -71,8 +137,9 @@ public class Jugador extends Entidad {
 		mira.actualizar();
 		corazon.actualizar();
 		textoVidas.actualizar();
+		flechas.actualizar();
 		cambiarArma();
-		//slash.actualizar();
+		// slash.actualizar();
 	}
 
 	public void jugadorColision(Bloque b) {
@@ -153,52 +220,48 @@ public class Jugador extends Entidad {
 			cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
 		}
 	}
-	
+
 	public void cambiarArma() {
-		
+
 		if (InputKeyboard.isKeyPressed(motor_v1.motor.input.Key.R)) {
 			cuerpo.setTextura(Assets.jugador);
 		}
-		
+
 		if (InputKeyboard.isKeyPressed(motor_v1.motor.input.Key.F)) {
 			cuerpo.setTextura(Assets.jugadorEspada);
 		}
-		
-		
+
 	}
-	
+
 	public void crearAtaqueEspada() {
 		Vector2D p = new Vector2D(100, 100);
-		slash = new Gif(getNombre(), Assets.slash , p, 100);
+		slash = new Gif(getNombre(), Assets.slash, p, 100);
 		Vector2D centro = slash.getTransformar().getPosicion();
-		
+
 		Vector2D posicionMouse = new Vector2D(InputMouse.getX(), InputMouse.getY());
 		double angulo = centro.getAnguloHacia(posicionMouse);
 		double desfase = 90;
 		slash.getTransformar().rotarloA(angulo + desfase);
-		
+
 		slash.setLoop(true);
 		slash.setDestruir(true);
-		
-		
-		
+
 	}
-	
+
 	public void ataque() {
-		
-		//if (cuerpo.getTextura() == Assets.jugadorEspada && InputMouse.isClicked()){
-			//crearAtaqueEspada();
-			//destruir();
-			
-		//}
-		
+
+		// if (cuerpo.getTextura() == Assets.jugadorEspada && InputMouse.isClicked()){
+		// crearAtaqueEspada();
+		// destruir();
+
+		// }
+
 	}
-	
 
 	@Override
 	public void destruir() {
-		//slash.destruir();
-
+		// slash.destruir();
+		flechas.destruir();
 	}
 
 	@Override
@@ -207,7 +270,9 @@ public class Jugador extends Entidad {
 		cuerpo.dibujar(g);
 		corazon.dibujar(g);
 		textoVidas.dibujar(g);
-		//slash.dibujar(g);
+		flechas.dibujar(g);
+//		flecha.dibujar(g);
+		// slash.dibujar(g);
 	}
 
 	public void imprimirDatos(double angulo, Vector2D posicionMouse, Vector2D centro) {
@@ -218,7 +283,6 @@ public class Jugador extends Entidad {
 			cronometro = 0;
 		}
 	}
-	
 
 	public SpriteMovible getCuerpo() {
 		return cuerpo;
