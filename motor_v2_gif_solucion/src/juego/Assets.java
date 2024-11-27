@@ -51,7 +51,17 @@ public class Assets {
 	public static BufferedImage corazon;
 	public static BufferedImage instrucciones;
 	public static BufferedImage titulo;
-	
+
+	public static BufferedImage enemigoBUp;
+	public static BufferedImage enemigoBDown;
+	public static BufferedImage enemigoBLeft;
+	public static BufferedImage enemigoBRight;
+	public static BufferedImage enemigoEUp;
+	public static BufferedImage enemigoEDown;
+	public static BufferedImage enemigoELeft;
+	public static BufferedImage enemigoERight;
+
+	public static BufferedImage enemigoH;
 	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
 	public static BufferedImage[] explosionCanon = new BufferedImage[5];
@@ -83,7 +93,19 @@ public class Assets {
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
 		instrucciones = Loader.cargarImagen("/assets_juego_disparos/instrucciones.jpeg");
 		titulo = Loader.cargarImagen("/assets_juego_disparos/villageInvasion.png");
-		 
+
+		//Assets Enemigo Ballesta
+		enemigoBUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaFrente.png");
+		enemigoBDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaEspalda.png");
+		enemigoBLeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaIzquierda.png");
+		enemigoBRight = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaDerecha.png");
+		
+		//Assets Enemigo Espada
+		enemigoEUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
+		enemigoEDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
+		enemigoELeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaIzquierda.png");
+		enemigoERight = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaDerecha.png");
+		
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
 		}		 
