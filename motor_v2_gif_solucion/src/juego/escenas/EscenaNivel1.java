@@ -80,8 +80,7 @@ public class EscenaNivel1 extends Scene {
 	}
 
 	public void crearEnemigos() {
-		Vector2D p = new Vector2D(300, Conf.HEIGHT / 2);
-		enemigoB = new EnemigoBallesta();
+		enemigoB = new EnemigoBallesta(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT /2-75));
 
 	}
 
