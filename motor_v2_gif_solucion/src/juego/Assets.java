@@ -95,14 +95,14 @@ public class Assets {
 		titulo = Loader.cargarImagen("/assets_juego_disparos/villageInvasion.png");
 
 		//Assets Enemigo Ballesta
-		enemigoBUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaFrente.png");
-		enemigoBDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaEspalda.png");
+		enemigoBDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaFrente.png");
+		enemigoBUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaEspalda.png");
 		enemigoBLeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaIzquierda.png");
 		enemigoBRight = Loader.cargarImagen("/assets_juego_disparos/EnemigoBallestaDerecha.png");
 		
 		//Assets Enemigo Espada
-		enemigoEUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
-		enemigoEDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
+		enemigoEDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
+		enemigoEUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
 		enemigoELeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaIzquierda.png");
 		enemigoERight = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaDerecha.png");
 		
