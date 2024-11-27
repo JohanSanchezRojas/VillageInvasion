@@ -45,7 +45,7 @@ public class EscenaBienvenida extends Scene{
 	@Override
 	public void actualizar() {
 		if (InputKeyboard.isDown(Key.ENTER)) {
-			Scene.cambiarEscena(new EscenaNivel9());
+			Scene.cambiarEscena(new EscenaNivel1());
 		}
 		
 		if (InputKeyboard.isKeyPressed(Key.ESCAPE)) {

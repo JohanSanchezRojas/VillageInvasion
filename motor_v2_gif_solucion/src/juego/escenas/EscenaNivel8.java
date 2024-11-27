@@ -186,7 +186,7 @@ public class EscenaNivel8 extends Scene{
 		
 		for (int i = 0; i < bill.length; i++) {
 			if(jugador.getColisiona().colisionaCon(bill[i].getColisiona())) {
-				Scene.cambiarEscena(new EscenaNivel8());
+				Scene.cambiarEscena(new EscenaNivel9());
 			}
 			
 		}
