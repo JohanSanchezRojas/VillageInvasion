@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoBallesta;
 import juego.entidades.EnemigoProvisional;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
