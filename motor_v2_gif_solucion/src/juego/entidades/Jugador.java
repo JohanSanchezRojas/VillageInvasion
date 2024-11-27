@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.RenderingHints.Key;
 import java.awt.event.MouseAdapter;
+import java.awt.geom.RoundRectangle2D.Double;
 
 import juego.Assets;
 import juego.Conf;
@@ -11,6 +12,7 @@ import motor_v1.motor.Entidad;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
 import motor_v1.motor.entidades.Gif;
+import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.Sprite;
 import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.entidades.SpriteSolido;
@@ -40,6 +42,10 @@ public class Jugador extends Entidad {
 		//crearAtaqueEspada();
 	}
 
+	private void disparar() {
+	    
+	}
+	
 	@Override
 	public void actualizar() {
 		
@@ -125,7 +131,6 @@ public class Jugador extends Entidad {
 		double desfase = 90;
 		cuerpo.getTransformar().rotarloA(angulo + desfase);
 
-		//imprimirDatos(angulo, posicionMouse, centro);
 	}
 
 	private void actualizarMira() {
