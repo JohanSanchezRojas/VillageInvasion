@@ -32,7 +32,7 @@ public class EscenaNivel1 extends Scene {
 		crearJugador();
 		crearBloques();
 		crearEnemigoProvisional();
-//		crearEnemigos();
+		crearEnemigos();
 
 	}
 
@@ -66,7 +66,7 @@ public class EscenaNivel1 extends Scene {
 		jugador.getTextoVidas().dibujar(arg0);
 		bill.dibujar(arg0);
 		dibujarBloques(arg0);
-//		enemigoB.dibujar(arg0);
+		enemigoB.dibujar(arg0);
 	}
 
 	public void Wallpaper() {
