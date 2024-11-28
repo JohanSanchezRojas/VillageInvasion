@@ -52,17 +52,21 @@ public class Jugador extends Entidad {
 		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH - Conf.FLECHA_HEIGHT) {
 			System.out.println("1");
 			flecha.destruir();
+			flecha.setViva(false);
 		} else if (flecha.getTransformar().getPosicion().getX() < 0) {
 			System.out.println("2");
 			flecha.destruir();
+			flecha.setViva(false);
 		}
 
 		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT - Conf.FLECHA_WIDTH) {
 			System.out.println("3");
 			flecha.destruir();
+			flecha.setViva(false);
 		} else if (flecha.getTransformar().getPosicion().getY() < 0) {
 			System.out.println("4");
 			flecha.destruir();
+			flecha.setViva(false);
 		}
 
 	}
@@ -71,6 +75,7 @@ public class Jugador extends Entidad {
 
 		if (flecha.getColisiona().colisionaCon(b.getColisiona())) {
 			flecha.destruir();
+			flecha.setViva(false);
 		}
 	}
 
@@ -107,7 +112,7 @@ public class Jugador extends Entidad {
 			if (flechas.get(i) != null) {
 				Flecha flechaAux = (Flecha) flechas.get(i);
 
-				flechaAux.getMovimiento().mover(flechaAux.getTransformar(), 0.5 * GameLoop.dt);
+				flechaAux.getMovimiento().mover(flechaAux.getTransformar(), 1 * GameLoop.dt);
 
 				if (flechaAux.getViva()) {
 					destruirFlecha(flechaAux);
@@ -319,4 +324,14 @@ public class Jugador extends Entidad {
 	public void setColorBlanco(Color colorBlanco) {
 		this.colorBlanco = colorBlanco;
 	}
+
+	public int getNumeroVidas() {
+		return numeroVidas;
+	}
+
+	public void setNumeroVidas(int numeroVidas) {
+		this.numeroVidas = numeroVidas;
+	}
+	
+	
 }
