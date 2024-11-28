@@ -14,7 +14,7 @@ public abstract class Enemigo extends Entidad {
 	public SpriteMovible cuerpo;
 	protected int movimientoE;
 	private int numeroVidas;
-	protected int crono;
+	//private double crono;
 	
 	public Enemigo(String nombre, BufferedImage textura, Vector2D posicion) {
 		super();
