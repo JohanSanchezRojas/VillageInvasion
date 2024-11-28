@@ -88,8 +88,6 @@ public class Jugador extends Entidad {
 				flecha.getTransformar().rotarloA(angulo + desfase);
 				flecha.getMovimiento().setDireccion((int) angulo);
 				flecha.getTransformar().setPosicion(centro);
-				
-				flecha.getMovimiento().mover(flecha.getTransformar(), 1 * GameLoop.dt);
 		}
 	}
 
@@ -196,7 +194,6 @@ public class Jugador extends Entidad {
 		double angulo = centro.getAnguloHacia(posicionMouse);
 		double desfase = 90;
 		cuerpo.getTransformar().rotarloA(angulo + desfase);
-
 	}
 
 	private void actualizarMira() {
