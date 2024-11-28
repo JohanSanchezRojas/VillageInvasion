@@ -45,6 +45,7 @@ public class EscenaNivel1 extends Scene {
 		bill.actualizar();
 		fondoNivel.actualizar();
 		jugador.actualizar();
+		enemigoB.actualizar();
 		actualizarBloques();
 		colisionBloqueJugador();
 		colisionFlechaJugador();
