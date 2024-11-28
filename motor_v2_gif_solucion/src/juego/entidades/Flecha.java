@@ -10,8 +10,8 @@ import juego.Assets;
 
 public class Flecha extends SpriteMovible{
 
-	public Flecha(String nombre, BufferedImage textura, Vector2D posicion) {
-		super(nombre, textura, posicion);
+	public Flecha(String nombre, BufferedImage textura) {
+		super(nombre, textura);
 	}
 	
 }

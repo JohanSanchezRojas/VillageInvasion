@@ -31,6 +31,7 @@ public class Jugador extends Entidad {
 	private int numeroVidas;
 	private Color colorBlanco = new Color(250, 250, 250);
 	double cronometro = 0;
+	double cronometro2 = 1000;
 	private Gif slash;
 	private Flecha flecha;
 	public ListaEntidades flechas;
@@ -79,31 +80,29 @@ public class Jugador extends Entidad {
 		double angulo = centro.getAnguloHacia(posicionMouse);
 		double desfase = 90;
 		
-		flecha = new Flecha("Flecha", Assets.flecha, centro);
-
-		System.out.println("Flecha metodo");
-
+		flecha = new Flecha("Flecha", Assets.flecha);
+		
 		flechas.add("Flecha", flecha);
-
+		
 		for (int i = 0; i < flechas.getAll().length; i++) {
-			int j = 0;
-			if (j == i) {
 				flecha.getTransformar().rotarloA(angulo + desfase);
 				flecha.getMovimiento().setDireccion((int) angulo);
 				flecha.getTransformar().setPosicion(centro);
-				j++;
-				System.out.println("Flecha FOR");
-			}
-
-			flecha.getMovimiento().mover(flecha.getTransformar(), 1 * GameLoop.dt);
+				
+				flecha.getMovimiento().mover(flecha.getTransformar(), 1 * GameLoop.dt);
 		}
 	}
 
 	@Override
 	public void actualizar() {
-
-		if (InputMouse.isClicked()) {
-			disparar();
+		cronometro2 += GameLoop.dt;
+		
+		boolean clickDisparo = InputMouse.isClicked();
+		
+		if (cronometro2 > 1000 && clickDisparo) {
+				disparar();
+				System.out.println("Disparo");
+				cronometro2 = 0;
 		}
 
 		for (int i = 0; i < flechas.getAll().length; i++) {
@@ -117,7 +116,7 @@ public class Jugador extends Entidad {
 				}
 			}
 		}
-
+		
 		// if (slash != null) {
 		// slash.actualizar();
 		// }
