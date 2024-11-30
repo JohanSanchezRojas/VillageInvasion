@@ -1,29 +1,47 @@
 package juego.entidades;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import juego.Assets;
+import motor_v1.motor.Entidad;
 import motor_v1.motor.component.Collider;
+import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.entidades.SpriteSolido;
 import motor_v1.motor.util.Vector2D;
 
-public class Bloque extends SpriteSolido{
-
-	public Bloque(String nombre, BufferedImage textura, Vector2D posicion) {
-		super(nombre, textura, posicion);
-		
-	}
+public class Bloque extends Entidad{
+	private SpriteMovible bloque;
 	
+	public Bloque(Vector2D posicion) {
+		super();
+		bloque = new SpriteMovible("Bloque", Assets.madera);
+		bloque.getTransformar().setPosicion(posicion);
+	}
+
 	public void actualizar() {
-		colisiona.actualizar();
+		bloque.actualizar();
 	}
 	
 	public Collider getColisiona() {
-		return colisiona;
+		return bloque.getColisiona();
+	}
+
+	@Override
+	public void destruir() {
+	}
+
+	@Override
+	public void dibujar(Graphics g) {
+		bloque.dibujar(g);
+	}
+
+	public SpriteMovible getBloque() {
+		return bloque;
+	}
+
+	public void setBloque(SpriteMovible bloque) {
+		this.bloque = bloque;
 	}
 	
-	
-	
-	
-	
-
 }

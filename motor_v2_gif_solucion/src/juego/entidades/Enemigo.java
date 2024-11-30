@@ -8,6 +8,7 @@ import juego.Conf;
 import motor_v1.motor.Entidad;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
+import motor_v1.motor.component.Sound;
 import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.entidades.SpriteSolido;
 import motor_v1.motor.entidades.SpriteText;
@@ -17,22 +18,22 @@ public abstract class Enemigo extends Entidad {
 
 	private SpriteMovible cuerpo;
 	private SpriteMovible ataque;
+	private Sound blanco;
 	protected int movimientoE;
 	private int numeroVidas;
 	private boolean colision;
-	private double cronometroPuntos;
-	//private double crono;
-	
+	// private double crono;
+
 	public Enemigo(String nombre, SpriteMovible cuerpo, Vector2D posicion, SpriteMovible ataque) {
 		super();
 		this.cuerpo = cuerpo;
-		this.cuerpo.getTransformar().setPosicion(posicion);
-		cronometroPuntos = 0;
 		this.ataque = ataque;
+		this.cuerpo.getTransformar().setPosicion(posicion);
+		blanco = new Sound(Assets.sonidoBlanco);
 	}
 
 	public void colisionPantalla() {
-		
+
 		double x = cuerpo.getTransformar().getPosicion().getX();
 		if (x < 0) {
 			cuerpo.getTransformar().getPosicion().setX(0);
@@ -55,11 +56,11 @@ public abstract class Enemigo extends Entidad {
 			colision = true;
 		}
 	}
-	
+
 	public void colisionBloques(Bloque b) {
-		
+
 		double xEnemigo = cuerpo.getTransformar().getPosicion().getX();
-		double xB = b.getTransformar().getPosicion().getX();
+		double xB = b.getBloque().getTransformar().getPosicion().getX();
 
 		if ((cuerpo.getMovimiento().getDireccion() == Vector2D.RIGHT) && xEnemigo <= xB) {
 			cuerpo.getTransformar().getPosicion().setX(xB - Conf.ENEMIGO_WIDTH);
@@ -72,7 +73,7 @@ public abstract class Enemigo extends Entidad {
 		}
 
 		double yEnemigo = cuerpo.getTransformar().getPosicion().getY();
-		double yB = b.getTransformar().getPosicion().getY();
+		double yB = b.getBloque().getTransformar().getPosicion().getY();
 
 		if ((cuerpo.getMovimiento().getDireccion() == Vector2D.DOWN) && yEnemigo <= yB) {
 			cuerpo.getTransformar().getPosicion().setY(yB - Conf.ENEMIGO_HEIGHT);
@@ -84,20 +85,13 @@ public abstract class Enemigo extends Entidad {
 			colision = true;
 		}
 	}
-	
-	public void enemigoFlechaColision() {
-		System.out.println("Muere1");
-			numeroVidas--;
-			
-		cronometroPuntos += GameLoop.dt;
-		if (cronometroPuntos > 1200) {
-			System.out.println("Muere2");
-			cronometroPuntos = 0;
-		}
+
+	public void recibirDano() {
+		blanco.play();
+		numeroVidas--;
 	}
-	
-	
-	public void actualizar () {
+
+	public void actualizar() {
 		cuerpo.getColisiona().actualizar();
 		ataque.getColisiona().actualizar();
 		atacar();
@@ -105,11 +99,11 @@ public abstract class Enemigo extends Entidad {
 		colisionPantalla();
 		morir();
 	}
-	
+
 	public abstract void movimiento();
-	
+
 	public abstract void atacar();
-	
+
 	public void morir() {
 		if (numeroVidas == 0) {
 			destruir();
@@ -117,7 +111,7 @@ public abstract class Enemigo extends Entidad {
 			ataque.setViva(false);
 		}
 	}
-	
+
 	public SpriteMovible getCuerpo() {
 		return cuerpo;
 	}
@@ -154,7 +148,5 @@ public abstract class Enemigo extends Entidad {
 		this.numeroVidas = numeroVidas;
 	}
 
-	
-	
 }
 //{}

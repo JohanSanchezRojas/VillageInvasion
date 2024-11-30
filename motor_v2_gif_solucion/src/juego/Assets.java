@@ -75,7 +75,7 @@ public class Assets {
 	public static Font font_minecraft12;
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LOS SONIDOS DEL JUEGO 
-	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo;
+	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo, sonidoBlanco;
 	
 	public static boolean cargados() {
 		
@@ -134,11 +134,11 @@ public class Assets {
 		 
 		// AQUI SE REALIZA LA CARGA DE LOS SONIDOS DEL JUEGO 
 		 background = Loader.cargarSonido("/assets_juego_disparos/sonidos/FinalBattle.wav");
-		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/playerShoot.wav");
 		 sonidoExposion = Loader.cargarSonido("/assets_juego_disparos/sonidos/parry.wav");
 		 sonidoDano = Loader.cargarSonido("/assets_juego_disparos/sonidos/dano.wav");
 		 sonidoHechizo = Loader.cargarSonido("/assets_juego_disparos/sonidos/hechizo.wav");
-		 
+		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/disparo.wav");
+		 sonidoBlanco = Loader.cargarSonido("/assets_juego_disparos/sonidos/blanco.wav");
 		
 		return true;
 	}

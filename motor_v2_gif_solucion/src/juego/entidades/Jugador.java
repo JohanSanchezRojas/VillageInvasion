@@ -13,6 +13,7 @@ import motor_v1.motor.Entidad;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
 import motor_v1.motor.component.Movement;
+import motor_v1.motor.component.Sound;
 import motor_v1.motor.entidades.Gif;
 import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.Sprite;
@@ -26,128 +27,92 @@ import motor_v1.motor.util.Vector2D;
 public class Jugador extends Entidad {
 	private SpriteMovible cuerpo;
 	private Sprite mira;
-	private SpriteSolido corazon;
-	private SpriteText textoVidas;
+	
+	private Sound disparo;
+	public Sound dano;
 	private int numeroVidas;
-	private Color colorBlanco = new Color(250, 250, 250);
 	double cronometro = 0;
-	double cronometro2 = 1000;
+	double cronometroDisparo = 1000;
 	private Gif slash;
 	private Flecha flecha;
-	public ListaEntidades flechas;
+	public ListaEntidades listaFlechas;
 
 	public Jugador(Vector2D p, int vidas) {
 		super();
 		cuerpo = new SpriteMovible("Cuerpo", Assets.jugador, p);
 		mira = new Sprite("Mira", Assets.mira);
-		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
+		disparo = new Sound(Assets.sonidoDisparo);
+		dano = new Sound(Assets.sonidoDano);
 		this.numeroVidas = vidas;
-		textoVidas = new SpriteText("x " + numeroVidas, colorBlanco, Assets.font_minecraft, false);
-		textoVidas.setPosicion(new Vector2D(55, 35));
-		flechas = new ListaEntidades();
-		// crearAtaqueEspada();
+		
+		listaFlechas = new ListaEntidades();
 	}
 
-	private void destruirFlecha(Flecha flecha) {
-		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH - Conf.FLECHA_HEIGHT) {
-			System.out.println("1");
-			flecha.destruir();
-			flecha.setViva(false);
-		} else if (flecha.getTransformar().getPosicion().getX() < 0) {
-			System.out.println("2");
-			flecha.destruir();
-			flecha.setViva(false);
-		}
-
-		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT - Conf.FLECHA_WIDTH) {
-			System.out.println("3");
-			flecha.destruir();
-			flecha.setViva(false);
-		} else if (flecha.getTransformar().getPosicion().getY() < 0) {
-			System.out.println("4");
-			flecha.destruir();
-			flecha.setViva(false);
-		}
-
-	}
 
 	public void flechaColision(Bloque b, Flecha flecha) {
 
-		if (flecha.getColisiona().colisionaCon(b.getColisiona())) {
+		if (flecha.getFlecha().getColisiona().colisionaCon(b.getColisiona())) {
 			flecha.destruir();
 			flecha.setViva(false);
 		}
 	}
 
 	private void disparar() {
-		Vector2D centro = cuerpo.getTransformar().getPosicion();
-		Vector2D posicionMouse = new Vector2D(InputMouse.getX(), InputMouse.getY());
-		double angulo = centro.getAnguloHacia(posicionMouse);
-		double desfase = 90;
+		cronometroDisparo += GameLoop.dt;
 		
-		flecha = new Flecha("Flecha", Assets.flecha);
+		boolean clickDisparo = InputMouse.isClicked();
 		
-		flechas.add("Flecha", flecha);
-		
-		for (int i = 0; i < flechas.getAll().length; i++) {
-				flecha.getTransformar().rotarloA(angulo + desfase);
-				flecha.getMovimiento().setDireccion((int) angulo);
-				flecha.getTransformar().setPosicion(centro);
+		if (cronometroDisparo > 1000 && clickDisparo) {
+			cronometroDisparo = 0;
+			disparo.play();
+			
+			Vector2D centro = cuerpo.getTransformar().getPosicion();
+			Vector2D posicionMouse = new Vector2D(InputMouse.getX(), InputMouse.getY());
+			double angulo = centro.getAnguloHacia(posicionMouse);
+			double desfase = 90;
+			
+			flecha = new Flecha("Flecha", new SpriteMovible("Flecha", Assets.flecha));
+			flecha.actualizar();
+			listaFlechas.add("Flecha", flecha);
+			
+			for (int i = 0; i < listaFlechas.getLength(); i++) {
+					flecha.getFlecha().getTransformar().rotarloA(angulo + desfase);
+					flecha.getFlecha().getMovimiento().setDireccion((int) angulo);
+					flecha.getFlecha().getTransformar().setPosicion(centro);
+			}
+		}
+	
+		for (int i = 0; i < listaFlechas.getLength(); i++) {
+			if (listaFlechas.get(i) != null) {
+				Flecha flechaAux = (Flecha) listaFlechas.get(i);
+
+				flechaAux.getFlecha().getMovimiento().mover(flechaAux.getFlecha().getTransformar(), 1.5 * GameLoop.dt);
+				
+				if (flechaAux.getViva()) {
+					flechaAux.colisionPantalla();
+				}
+			}
 		}
 	}
 
 	@Override
 	public void actualizar() {
-		cronometro2 += GameLoop.dt;
-		
-		boolean clickDisparo = InputMouse.isClicked();
-		
-		if (cronometro2 > 1000 && clickDisparo) {
-				disparar();
-				System.out.println("Disparo");
-				cronometro2 = 0;
-		}
-
-		for (int i = 0; i < flechas.getAll().length; i++) {
-			if (flechas.get(i) != null) {
-				Flecha flechaAux = (Flecha) flechas.get(i);
-
-				flechaAux.getMovimiento().mover(flechaAux.getTransformar(), 1 * GameLoop.dt);
-
-				if (flechaAux.getViva()) {
-					destruirFlecha(flechaAux);
-				}
-			}
-		}
-		
-		// if (slash != null) {
-		// slash.actualizar();
-		// }
-
-		// if (InputMouse.isClicked()) {
-		// crearAtaqueEspada();
-		// destruir();
-		// }
-
+		disparar();
 		movimiento();
 		actualizarMira();
 		rotacion();
 		limite();
 
-		cuerpo.getColisiona().actualizar();
 		cuerpo.actualizar();
 		mira.actualizar();
-		corazon.actualizar();
-		textoVidas.actualizar();
-		flechas.actualizar();
+		listaFlechas.actualizar();
 		cambiarArma();
-		// slash.actualizar();
 	}
 
 	public void jugadorColision(Bloque b) {
 
 		double xJugador = cuerpo.getTransformar().getPosicion().getX();
-		double xB = b.getTransformar().getPosicion().getX();
+		double xB = b.getBloque().getTransformar().getPosicion().getX();
 
 		if ((cuerpo.getMovimiento().getDireccion() == Vector2D.RIGHT) && xJugador <= xB) {
 			cuerpo.getTransformar().getPosicion().setX(xB - Conf.JUGADOR_WIDTH);
@@ -158,7 +123,7 @@ public class Jugador extends Entidad {
 		}
 
 		double yJugador = cuerpo.getTransformar().getPosicion().getY();
-		double yB = b.getTransformar().getPosicion().getY();
+		double yB = b.getBloque().getTransformar().getPosicion().getY();
 
 		if ((cuerpo.getMovimiento().getDireccion() == Vector2D.DOWN) && yJugador <= yB) {
 			cuerpo.getTransformar().getPosicion().setY(yB - Conf.JUGADOR_HEIGHT);
@@ -262,18 +227,14 @@ public class Jugador extends Entidad {
 	@Override
 	public void destruir() {
 		// slash.destruir();
-		flechas.destruir();
+		listaFlechas.destruir();
 	}
 
 	@Override
 	public void dibujar(Graphics g) {
 		mira.dibujar(g);
 		cuerpo.dibujar(g);
-		corazon.dibujar(g);
-		textoVidas.dibujar(g);
-		flechas.dibujar(g);
-//		flecha.dibujar(g);
-		// slash.dibujar(g);
+		listaFlechas.dibujar(g);
 	}
 
 	public void imprimirDatos(double angulo, Vector2D posicionMouse, Vector2D centro) {
@@ -301,29 +262,6 @@ public class Jugador extends Entidad {
 		this.mira = mira;
 	}
 
-	public SpriteSolido getCorazon() {
-		return corazon;
-	}
-
-	public void setCorazon(SpriteSolido corazon) {
-		this.corazon = corazon;
-	}
-
-	public SpriteText getTextoVidas() {
-		return textoVidas;
-	}
-
-	public void setTextoVidas(SpriteText textoVidas) {
-		this.textoVidas = textoVidas;
-	}
-
-	public Color getColorBlanco() {
-		return colorBlanco;
-	}
-
-	public void setColorBlanco(Color colorBlanco) {
-		this.colorBlanco = colorBlanco;
-	}
 
 	public int getNumeroVidas() {
 		return numeroVidas;

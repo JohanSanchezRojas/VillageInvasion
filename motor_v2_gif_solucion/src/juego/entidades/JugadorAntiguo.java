@@ -93,37 +93,37 @@ public class JugadorAntiguo extends SpriteMovible{
 	}
 	**/
 	
-	public void jugadorColision(Bloque b) {
-		
-		double xJugador = transformar.getPosicion().getX();
-		double xB = b.getTransformar().getPosicion().getX();
-			
-		if((movimiento.getDireccion() == Vector2D.RIGHT) && xJugador <= xB ) {
-			transformar.getPosicion().setX(xB - Conf.JUGADOR_WIDTH);
-			
-		}
-			
-		if((movimiento.getDireccion() == Vector2D.LEFT) && xJugador >= xB) {
-			transformar.getPosicion().setX(xB + Conf.WOOD_LADO);
-			
-		}
-			
-		double yJugador = transformar.getPosicion().getY();
-		double yB = b.getTransformar().getPosicion().getY();
-			
-			
-		if((movimiento.getDireccion() == Vector2D.DOWN) && yJugador <= yB) {
-			transformar.getPosicion().setY(yB - Conf.JUGADOR_HEIGHT);
-			
-		}
-			
-		if((movimiento.getDireccion() == Vector2D.UP) && yJugador >= yB) {
-			transformar.getPosicion().setY(yB + Conf.WOOD_LADO);
-			
-		}
-		
-			
-	}
+//	public void jugadorColision(Bloque b) {
+//		
+//		double xJugador = transformar.getPosicion().getX();
+//		double xB = b.getTransformar().getPosicion().getX();
+//			
+//		if((movimiento.getDireccion() == Vector2D.RIGHT) && xJugador <= xB ) {
+//			transformar.getPosicion().setX(xB - Conf.JUGADOR_WIDTH);
+//			
+//		}
+//			
+//		if((movimiento.getDireccion() == Vector2D.LEFT) && xJugador >= xB) {
+//			transformar.getPosicion().setX(xB + Conf.WOOD_LADO);
+//			
+//		}
+//			
+//		double yJugador = transformar.getPosicion().getY();
+//		double yB = b.getTransformar().getPosicion().getY();
+//			
+//			
+//		if((movimiento.getDireccion() == Vector2D.DOWN) && yJugador <= yB) {
+//			transformar.getPosicion().setY(yB - Conf.JUGADOR_HEIGHT);
+//			
+//		}
+//			
+//		if((movimiento.getDireccion() == Vector2D.UP) && yJugador >= yB) {
+//			transformar.getPosicion().setY(yB + Conf.WOOD_LADO);
+//			
+//		}
+//		
+//			
+//	}
 	
 	public void movimiento() {
 		

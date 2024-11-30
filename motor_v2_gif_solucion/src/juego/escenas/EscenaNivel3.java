@@ -58,8 +58,6 @@ public class EscenaNivel3 extends Scene{
 		fondoNivel.dibujar(arg0);
 		jugador.dibujar(arg0);
 		jugador.getMira().dibujar(arg0);
-		jugador.getCorazon().dibujar(arg0);
-		jugador.getTextoVidas().dibujar(arg0);
 		dibujarBloques(arg0);
 		dibujarEnemigosProvisional(arg0);
 		
@@ -88,15 +86,9 @@ public class EscenaNivel3 extends Scene{
 			
 			if(i <= 3) {
 				Vector2D p = new Vector2D(Conf.WIDTH / 1.5, y);
-				bloque = new Bloque("madera" + i, Assets.madera, p);
-				bloque.getTransformar().setPosicion(p.subtract(bloque.getCentroRotacion()));
-				bloques[i] = bloque;
 				y = y + 80;
 			}else if(i >= 4 ){
 				Vector2D p = new Vector2D(Conf.WIDTH / 2.5, y2);
-				bloque = new Bloque("madera" + i, Assets.madera, p);
-				bloque.getTransformar().setPosicion(p.subtract(bloque.getCentroRotacion()));
-				bloques[i] = bloque;
 				y2 = y2 - 80;
 				
 				
