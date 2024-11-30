@@ -16,7 +16,7 @@ import motor_v1.motor.util.Vector2D;
 
 public abstract class Enemigo extends Entidad {
 
-	private SpriteMovible cuerpo;
+	public SpriteMovible cuerpo;
 	private SpriteMovible ataque;
 	private Sound blanco;
 	protected int movimientoE;

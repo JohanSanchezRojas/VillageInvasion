@@ -1,30 +1,57 @@
 package juego.escenas;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoHechicero;
+import juego.entidades.EnemigoEspada;
 import juego.entidades.Jugador;
 import juego.entidades.EnemigoProvisional;
 import motor_v1.motor.Scene;
+import motor_v1.motor.entidades.Gif;
+import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.SpriteSolido;
+import motor_v1.motor.entidades.SpriteText;
 import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
 public class EscenaNivel2 extends Scene{
+	
 	private SpriteSolido fondoNivel;
 	private Jugador jugador;
 	private Bloque[] bloques = new Bloque[5];
 	private EnemigoProvisional[] bill = new EnemigoProvisional[2];
-
+	private SpriteSolido corazon;
+	private SpriteText puntos;
+	private SpriteText textoVidas;
+	private ListaEntidades listaBloques;
+	private ListaEntidades listaEnemigos;
+	private Gif romper;
+	double cronometro = 1200;
+	private double cronometroCambioSprite;
+	private double cronometroPuntos = 0;
+	private boolean cambiandoSprite = false;
 	
+	private int cantidadEnemigos = 0;
 	
 	
 	public EscenaNivel2() {
 		super();
 		
+		romper = new Gif("Romper", Assets.romperFlecha, new Vector2D(0, 0), 100);
+		romper.setVisible(false);
+		jugador = new Jugador(new Vector2D(150, Conf.HEIGHT / 2), 10);
+		listaEnemigos = new ListaEntidades();
+		listaBloques = new ListaEntidades();
+		puntos = new SpriteText("100", new Color(50), Assets.font_minecraft, false);
+		fondoNivel = new SpriteSolido("Fondo", Assets.fondoCesped);
+		textoVidas = new SpriteText("x " + jugador.getNumeroVidas(), new Color(250, 250, 250), Assets.font_minecraft, false);
+		textoVidas.setPosicion(new Vector2D(55, 35));
+		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
 		
 		Wallpaper();
 		crearJugador();
@@ -64,6 +91,15 @@ public class EscenaNivel2 extends Scene{
 		
 		
 		
+	}
+	public void crearEnemigos() {
+		EnemigoEspada enemigoE1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
+		EnemigoEspada enemigoE2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
+		
+		listaEnemigos.add("Enemigo", enemigoE1);
+		listaEnemigos.add("Enemigo", enemigoE2);
+		
+		cantidadEnemigos = 2;
 	}
 	
 	public void Wallpaper() {
