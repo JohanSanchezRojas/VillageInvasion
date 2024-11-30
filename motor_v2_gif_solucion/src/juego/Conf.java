@@ -14,6 +14,9 @@ public class Conf {
 	public static final int ENEMIGO_HEIGHT = 82;
 	public static final int ENEMIGO_WIDTH = 78;
 	
+	public static final int HECHIZO_HEIGHT = 333;
+	public static final int HECHIZO_WIDTH = 40;	
+	
 	public static final int WOOD_LADO = 80;
 	
 	//Prueba Andrew

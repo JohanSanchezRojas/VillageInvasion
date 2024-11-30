@@ -48,6 +48,7 @@ public class Assets {
 	public static BufferedImage jugadorEspada;
 	public static BufferedImage jugadorInvencible;
 	public static BufferedImage flecha;
+	public static BufferedImage hechizo;
 	public static BufferedImage madera;
 	public static BufferedImage corazon;
 	public static BufferedImage instrucciones;
@@ -61,9 +62,8 @@ public class Assets {
 	public static BufferedImage enemigoTDown;
 	public static BufferedImage enemigoTLeft;
 	public static BufferedImage enemigoTRight;
+	public static BufferedImage enemigoHechicero;
 
-	public static BufferedImage enemigoH;
-	
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
 	public static BufferedImage[] explosionCanon = new BufferedImage[5];
 	public static BufferedImage[] humoDisparo = new BufferedImage[10];
@@ -75,7 +75,7 @@ public class Assets {
 	public static Font font_minecraft12;
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LOS SONIDOS DEL JUEGO 
-	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano;
+	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo;
 	
 	public static boolean cargados() {
 		
@@ -91,6 +91,7 @@ public class Assets {
 		jugadorEspada = Loader.cargarImagen("/assets_juego_disparos/jugadorEspada.png");
 		jugadorInvencible = Loader.cargarImagen("/assets_juego_disparos/jugadorInvencible.png");
 		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
+		hechizo = Loader.cargarImagen("/assets_juego_disparos/hechizo.png");
 		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
 		instrucciones = Loader.cargarImagen("/assets_juego_disparos/instrucciones.jpeg");
@@ -101,6 +102,8 @@ public class Assets {
 		enemigoEUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
 		enemigoELeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaIzquierda.png");
 		enemigoERight = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaDerecha.png");
+		enemigoHechicero = Loader.cargarImagen("/assets_juego_disparos/enemigoHechicero.png");
+
 		
 		//Assets Enemigo Espada
 //		enemigoTDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
@@ -134,6 +137,7 @@ public class Assets {
 		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/playerShoot.wav");
 		 sonidoExposion = Loader.cargarSonido("/assets_juego_disparos/sonidos/parry.wav");
 		 sonidoDano = Loader.cargarSonido("/assets_juego_disparos/sonidos/dano.wav");
+		 sonidoHechizo = Loader.cargarSonido("/assets_juego_disparos/sonidos/hechizo.wav");
 		 
 		
 		return true;
