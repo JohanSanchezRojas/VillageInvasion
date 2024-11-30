@@ -47,7 +47,6 @@ public class Assets {
 	public static BufferedImage jugador;
 	public static BufferedImage jugadorEspada;
 	public static BufferedImage jugadorInvencible;
-	public static BufferedImage flecha;
 	public static BufferedImage hechizo;
 	public static BufferedImage madera;
 	public static BufferedImage corazon;
@@ -68,6 +67,8 @@ public class Assets {
 	public static BufferedImage[] explosionCanon = new BufferedImage[5];
 	public static BufferedImage[] humoDisparo = new BufferedImage[10];
 	public static BufferedImage[] slash = new BufferedImage[3];
+	public static BufferedImage[] flecha = new BufferedImage[3];
+	public static BufferedImage[] romperFlecha = new BufferedImage[4];
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LAS FUENTES DEL JUEGO 
 	public static Font font_maru;
@@ -75,7 +76,7 @@ public class Assets {
 	public static Font font_minecraft12;
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LOS SONIDOS DEL JUEGO 
-	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo, sonidoBlanco;
+	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo, sonidoBlanco, sonidoMusica;
 	
 	public static boolean cargados() {
 		
@@ -90,7 +91,6 @@ public class Assets {
 		jugador = Loader.cargarImagen("/assets_juego_disparos/jugador.png");
 		jugadorEspada = Loader.cargarImagen("/assets_juego_disparos/jugadorEspada.png");
 		jugadorInvencible = Loader.cargarImagen("/assets_juego_disparos/jugadorInvencible.png");
-		flecha = Loader.cargarImagen("/assets_juego_disparos/flecha.png");
 		hechizo = Loader.cargarImagen("/assets_juego_disparos/hechizo.png");
 		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
@@ -126,6 +126,14 @@ public class Assets {
 		for (int i = 0; i < slash.length; i++) {
 			slash[i] = Loader.cargarImagen("/assets_juego_disparos/slash/slash"+ (i) +".png");
 		}
+		
+		for (int i = 0; i < flecha.length; i++) {
+			flecha[i] = Loader.cargarImagen("/assets_juego_disparos/slash/flecha"+ (i) +".png");
+		}
+		
+		for (int i = 0; i < romperFlecha.length; i++) {
+			romperFlecha[i] = Loader.cargarImagen("/assets_juego_disparos/slash/romper"+ (i) +".png");
+		}
 
 		// AQUI SE REALIZA LA CARGA DE LAS FUENTES DEL JUEGO  	
 		 font_maru = Loader.cargarFuente("/assets_juego_disparos/fuente/maru.ttf", 25);
@@ -139,6 +147,7 @@ public class Assets {
 		 sonidoHechizo = Loader.cargarSonido("/assets_juego_disparos/sonidos/hechizo.wav");
 		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/disparo.wav");
 		 sonidoBlanco = Loader.cargarSonido("/assets_juego_disparos/sonidos/blanco.wav");
+		 sonidoMusica = Loader.cargarSonido("/assets_juego_disparos/sonidos/musica.wav");
 		
 		return true;
 	}

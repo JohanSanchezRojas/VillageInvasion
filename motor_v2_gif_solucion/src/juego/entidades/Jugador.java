@@ -42,19 +42,12 @@ public class Jugador extends Entidad {
 		cuerpo = new SpriteMovible("Cuerpo", Assets.jugador, p);
 		mira = new Sprite("Mira", Assets.mira);
 		disparo = new Sound(Assets.sonidoDisparo);
+		disparo.changeVolume(70);
 		dano = new Sound(Assets.sonidoDano);
+		dano.changeVolume(70);
 		this.numeroVidas = vidas;
 		
 		listaFlechas = new ListaEntidades();
-	}
-
-
-	public void flechaColision(Bloque b, Flecha flecha) {
-
-		if (flecha.getFlecha().getColisiona().colisionaCon(b.getColisiona())) {
-			flecha.destruir();
-			flecha.setViva(false);
-		}
 	}
 
 	private void disparar() {
@@ -71,7 +64,7 @@ public class Jugador extends Entidad {
 			double angulo = centro.getAnguloHacia(posicionMouse);
 			double desfase = 90;
 			
-			flecha = new Flecha("Flecha", new SpriteMovible("Flecha", Assets.flecha));
+			flecha = new Flecha("Flecha", centro);
 			flecha.actualizar();
 			listaFlechas.add("Flecha", flecha);
 			

@@ -9,6 +9,7 @@ import juego.Assets;
 import juego.Conf;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.Scene;
+import motor_v1.motor.component.Sound;
 import motor_v1.motor.entidades.Gif;
 import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.SpriteSolido;
@@ -24,6 +25,7 @@ public class EscenaBienvenida extends Scene{
 	private SpriteText mensajeJuego;
 	private SpriteText mensajeInscribirUsuario;
 	private SpriteText mensajeSalir;
+	private Sound musica;
 	private SpriteText joshua;
 	private SpriteText andrew;
 	private SpriteText johan;
@@ -34,6 +36,10 @@ public class EscenaBienvenida extends Scene{
 	
 	public EscenaBienvenida() {
 		super();
+		musica = new Sound(Assets.sonidoMusica);
+		musica.play();
+		musica.changeVolume(70);
+		musica.loop();
 		Wallpaper();
 		Mensajes();
 		crearInstrucciones();

@@ -30,6 +30,7 @@ public abstract class Enemigo extends Entidad {
 		this.ataque = ataque;
 		this.cuerpo.getTransformar().setPosicion(posicion);
 		blanco = new Sound(Assets.sonidoBlanco);
+		blanco.changeVolume(70);
 	}
 
 	public void colisionPantalla() {

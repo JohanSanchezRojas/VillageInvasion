@@ -1,7 +1,10 @@
 package juego.entidades;
 
 import motor_v1.motor.Entidad;
+import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
+import motor_v1.motor.entidades.Gif;
+import motor_v1.motor.entidades.GifMovible;
 import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.util.Vector2D;
 import java.awt.Graphics;
@@ -11,39 +14,43 @@ import juego.Assets;
 import juego.Conf;
 
 public class Flecha extends Entidad{
-	private SpriteMovible flecha;
+	private GifMovible flecha;
 	
-	public Flecha(String nombre, SpriteMovible flecha) {
+	public Flecha(String nombre, Vector2D posicion) {
 		super();
-		this.flecha = flecha;
+		this.flecha = new GifMovible("Flecha", Assets.flecha, posicion, 100);
 	}
 
 	public void colisionPantalla() {
-		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH - Conf.FLECHA_HEIGHT) {
+		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH + 30 - Conf.FLECHA_HEIGHT) {
 			System.out.println("1");
-			destruir();
-			setViva(false);
-		} else if (flecha.getTransformar().getPosicion().getX() < 0) {
+			
+			romper();
+		} else if (flecha.getTransformar().getPosicion().getX() < - 30) {
 			System.out.println("2");
-			destruir();
-			setViva(false);
+			romper();
 		}
 
-		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT - Conf.FLECHA_WIDTH) {
+		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT + 30 - Conf.FLECHA_WIDTH) {
 			System.out.println("3");
-			destruir();
-			setViva(false);
-		} else if (flecha.getTransformar().getPosicion().getY() < 0) {
+			romper();
+		} else if (flecha.getTransformar().getPosicion().getY() < - 30) {
 			System.out.println("4");
+			romper();
+		}
+	}
+	
+	public void romper() {
 			destruir();
 			setViva(false);
-		}
+			flecha.setViva(false);
+			flecha.destruir();
+			destruir();
 	}
 	
 	@Override
 	public void actualizar() {
 		flecha.actualizar();
-		
 		colisionPantalla();
 	}
 	
@@ -59,14 +66,15 @@ public class Flecha extends Entidad{
 	public Collider getColisiona() {
 		return flecha.getColisiona();
 	}
-	
-	public SpriteMovible getFlecha() {
+
+	public GifMovible getFlecha() {
 		return flecha;
 	}
 
-	public void setFlecha(SpriteMovible flecha) {
+	public void setFlecha(GifMovible flecha) {
 		this.flecha = flecha;
 	}
+	
 	
 	
 }

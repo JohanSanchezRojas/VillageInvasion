@@ -14,6 +14,7 @@ import juego.entidades.Jugador;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.Scene;
 import motor_v1.motor.component.Sound;
+import motor_v1.motor.entidades.Gif;
 import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.entidades.SpriteSolido;
@@ -32,8 +33,7 @@ public class EscenaNivel1 extends Scene {
 	private Jugador jugador;
 	private ListaEntidades listaBloques;
 	private ListaEntidades listaEnemigos;
-	
-	
+	private Gif romper;
 	double cronometro = 1200;
 	private double cronometroCambioSprite;
 	private double cronometroPuntos = 0;
@@ -43,6 +43,8 @@ public class EscenaNivel1 extends Scene {
 	
 	public EscenaNivel1() {
 		super();
+		romper = new Gif("Romper", Assets.romperFlecha, new Vector2D(0, 0), 100);
+		romper.setVisible(false);
 		jugador = new Jugador(new Vector2D(150, Conf.HEIGHT / 2), 10);
 		listaEnemigos = new ListaEntidades();
 		listaBloques = new ListaEntidades();
@@ -61,7 +63,6 @@ public class EscenaNivel1 extends Scene {
 			Scene.cambiarEscena(new EscenaBienvenida());
 		}
 		
-		
 		fondoNivel.actualizar();
 		corazon.actualizar();
 		jugador.actualizar();
@@ -69,6 +70,7 @@ public class EscenaNivel1 extends Scene {
 		listaEnemigos.actualizar();
 		puntos.actualizar();
 		textoVidas.actualizar();
+		romper.actualizar();
 		colisionBloqueJugador();
 		colisionFlechaJugador();
 		colisionBloqueEnemigo();
@@ -85,8 +87,6 @@ public class EscenaNivel1 extends Scene {
 
 	@Override
 	public void dibujar(Graphics g) {
-		
-		
 		fondoNivel.dibujar(g);
 		jugador.dibujar(g);
 		listaBloques.dibujar(g);
@@ -94,6 +94,7 @@ public class EscenaNivel1 extends Scene {
 		textoVidas.dibujar(g);
 		puntos.dibujar(g);
 		corazon.dibujar(g);
+		romper.dibujar(g);
 	}
 
 	public void crearEnemigos() {
@@ -228,6 +229,12 @@ public class EscenaNivel1 extends Scene {
 		}
 	}
 
+	public void animacionRomperFlecha(Flecha f) {
+		romper = new Gif("Romper", Assets.romperFlecha, f.getFlecha().getTransformar().getPosicion(), 200);
+		romper.getTransformar().rotarloA(f.getFlecha().getTransformar().getRotacion());
+		romper.setLoop(false);
+	}
+	
 	public void colisionFlechaJugador() {
 		for (int i = 0; i < jugador.listaFlechas.getAll().length; i++) {
 			if (jugador.listaFlechas.get(i) != null) {
@@ -237,7 +244,8 @@ public class EscenaNivel1 extends Scene {
 						Bloque bloque = (Bloque) listaBloques.get(j);
 						if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
 							if (flechaAux.getViva()) {
-								jugador.flechaColision(bloque, flechaAux);
+								animacionRomperFlecha(flechaAux);
+								flechaAux.romper();
 								System.out.println("Bloque");
 							}
 						}
@@ -256,6 +264,7 @@ public class EscenaNivel1 extends Scene {
 						Flecha flechaAux = (Flecha) jugador.listaFlechas.get(j);
 						if (enemigoAux.getColisiona().colisionaCon(flechaAux.getColisiona())) {
 							if (enemigoAux.getViva() && flechaAux.getViva()) {
+								animacionRomperFlecha(flechaAux);
 								puntos.getTransformar().setPosicion(enemigoAux.getCuerpo().getTransformar().getPosicion());
 								puntos.setVisible(true);
 								enemigoAux.recibirDano();
