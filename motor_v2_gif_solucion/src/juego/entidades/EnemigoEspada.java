@@ -19,14 +19,12 @@ public class EnemigoEspada extends Enemigo{
 		super("Enemigo", new SpriteMovible("Enemigo", Assets.enemigoEDown), posicion, null);
 		super.setNumeroVidas(2);
 		
-		cuerpo = new SpriteMovible("Cuerpo", Assets.enemigoEDown, posicion);
 		direccionActual = MovimientoRandom(); // Dirección inicial aleatoria
 	}
 
 	public void actualizar() {
 		super.actualizar();
-		movimiento();
-		cuerpo.actualizar();
+		//movimiento();
 	}
 
 	
@@ -37,7 +35,7 @@ public class EnemigoEspada extends Enemigo{
 
 	@Override
 	public void dibujar(Graphics g) {
-		cuerpo.dibujar(g);
+		super.getCuerpo().dibujar(g);
 
 	}
 
@@ -47,7 +45,6 @@ public class EnemigoEspada extends Enemigo{
         return (int) (Math.random() * (max - min) + min); // Retorna un número aleatorio entre 1 y 4
     }
 
-	@Override
 	public void movimiento() {
 		cronometro += GameLoop.dt;
 		
@@ -60,24 +57,24 @@ public class EnemigoEspada extends Enemigo{
        // Moverse en la dirección actual
        switch (direccionActual) {
            case 1: // Arriba
-               cuerpo.getMovimiento().setDireccion(Vector2D.UP);
-               cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
-               cuerpo.setTextura(Assets.enemigoEUp);
+               super.getCuerpo().getMovimiento().setDireccion(Vector2D.UP);
+               super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(),super.getCuerpo().FACTOR_VELOCIDAD * GameLoop.dt);
+               super.getCuerpo().setTextura(Assets.enemigoEUp);
                break;
            case 2: // Abajo
-               cuerpo.getMovimiento().setDireccion(Vector2D.DOWN);
-               cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
-               cuerpo.setTextura(Assets.enemigoEDown);
+        	   super.getCuerpo().getMovimiento().setDireccion(Vector2D.DOWN);
+        	   super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(), super.getCuerpo().FACTOR_VELOCIDAD * GameLoop.dt);
+        	   super.getCuerpo().setTextura(Assets.enemigoEDown);
                break;
            case 3: // Izquierda
-               cuerpo.getMovimiento().setDireccion(Vector2D.LEFT);
-               cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
-               cuerpo.setTextura(Assets.enemigoELeft);
+        	   super.getCuerpo().getMovimiento().setDireccion(Vector2D.LEFT);
+        	   super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(),super.getCuerpo().FACTOR_VELOCIDAD * GameLoop.dt);
+        	   super.getCuerpo().setTextura(Assets.enemigoELeft);
                break;
            case 4: // Derecha
-               cuerpo.getMovimiento().setDireccion(Vector2D.RIGHT);
-               cuerpo.getMovimiento().mover(cuerpo.getTransformar(), cuerpo.FACTOR_VELOCIDAD * GameLoop.dt);
-               cuerpo.setTextura(Assets.enemigoERight);
+        	   super.getCuerpo().getMovimiento().setDireccion(Vector2D.RIGHT);
+        	   super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(), super.getCuerpo().FACTOR_VELOCIDAD * GameLoop.dt);
+        	   super.getCuerpo().setTextura(Assets.enemigoERight);
                break;
        }
 		
