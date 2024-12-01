@@ -47,17 +47,23 @@ public class Assets {
 	public static BufferedImage jugador;
 	public static BufferedImage jugadorEspada;
 	public static BufferedImage jugadorInvencible;
-	public static BufferedImage hechizo;
 	public static BufferedImage madera;
 	public static BufferedImage corazon;
 	public static BufferedImage instrucciones;
 	public static BufferedImage titulo;
 
+	// Enemigo espada
 	public static BufferedImage enemigoEspadaManoIzquierda;
 	public static BufferedImage enemigoEspadaManoDerecha;
 	public static BufferedImage enemigoEspadaManoIzquierdaSlash;
 	public static BufferedImage enemigoEspadaManoDerechaSlash;
+	
+	// Enemigo hechicero
 	public static BufferedImage enemigoHechicero;
+	public static BufferedImage hechizo;
+	
+	// Enemigo arquero
+	public static BufferedImage enemigoArquero;
 
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
 	public static BufferedImage[] explosionCanon = new BufferedImage[5];
@@ -72,7 +78,7 @@ public class Assets {
 	public static Font font_minecraft12;
 	
 	// AQUI SE CREAN LAS CONSTANTES PARA LOS SONIDOS DEL JUEGO 
-	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo, sonidoBlanco, sonidoMusica;
+	public static Clip background, sonidoDisparo, sonidoExposion, sonidoDano, sonidoHechizo, sonidoBlanco, sonidoMusica, sonidoEspada;
 	
 	public static boolean cargados() {
 		
@@ -101,6 +107,9 @@ public class Assets {
 		//Assets Enemigo Hechicero
 		enemigoHechicero = Loader.cargarImagen("/assets_juego_disparos/EnemigoHechicero.png");
 		hechizo = Loader.cargarImagen("/assets_juego_disparos/hechizo.png");
+		
+		//Assets Enemigo arquero
+		enemigoArquero = Loader.cargarImagen("/assets_juego_disparos/enemigoArquero.png");
 		
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
@@ -139,6 +148,7 @@ public class Assets {
 		 sonidoDisparo = Loader.cargarSonido("/assets_juego_disparos/sonidos/disparo.wav");
 		 sonidoBlanco = Loader.cargarSonido("/assets_juego_disparos/sonidos/blanco.wav");
 		 sonidoMusica = Loader.cargarSonido("/assets_juego_disparos/sonidos/musica.wav");
+		 sonidoEspada = Loader.cargarSonido("/assets_juego_disparos/sonidos/espada.wav");
 		
 		return true;
 	}

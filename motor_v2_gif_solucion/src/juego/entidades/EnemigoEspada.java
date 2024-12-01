@@ -7,6 +7,7 @@ import juego.Assets;
 import juego.Game;
 import motor_v1.motor.GameLoop;
 import motor_v1.motor.component.Collider;
+import motor_v1.motor.component.Sound;
 import motor_v1.motor.entidades.SpriteMovible;
 import motor_v1.motor.util.Vector2D;
 
@@ -17,9 +18,10 @@ public class EnemigoEspada extends Enemigo {
 	private double cronometroCambioSprite;
 	private boolean colisionBloque = false;
 	private int direccionActual;
-	public static final int TIEMPO_CAMBIO_DIRECCION = 1500;
-	public static final double VELOCIDAD = 2.5;
-	Vector2D posicionJugador; 
+	public static final double TIEMPO_CAMBIO_DIRECCION = GameLoop.dt * 70;
+	public static final double VELOCIDAD = GameLoop.dt * 0.15;
+	Sound espada;
+	Vector2D posicionJugador;
 	Bloque[] listaBloques;
 	int min;
 	int max;
@@ -27,32 +29,133 @@ public class EnemigoEspada extends Enemigo {
 	double diferenciaY;
 
 	public EnemigoEspada(Vector2D posicion) {
-		super("Enemigo", new SpriteMovible("Enemigo", Assets.enemigoEspadaManoIzquierda), posicion,
-				new SpriteMovible("Hechizo", Assets.hechizo));
+		super(new SpriteMovible("Enemigo", Assets.enemigoEspadaManoIzquierda), posicion);
 		posicionJugador = new Vector2D(0, 0);
 		listaBloques = new Bloque[0];
-		super.getAtaque().setVisible(false);
-		super.getAtaque().setViva(false);
+		espada = new Sound(Assets.sonidoEspada);
+		espada.changeVolume(70);
 		super.setNumeroVidas(2);
 	}
 
+	@Override
 	public void actualizar() {
 		super.actualizar();
-	}
-
-	@Override
-	public void destruir() {
 	}
 
 	@Override
 	public void dibujar(Graphics g) {
 		super.getCuerpo().dibujar(g);
 	}
+	
+	@Override
+	public void destruir() {
+	}
 
+	public void movimiento() {
+		Vector2D posicionEnemigo = super.getCuerpo().getTransformar().getPosicion();
+		double angulo = posicionEnemigo.getAnguloHacia(posicionJugador);
+		double desfase = 90;
+		super.getCuerpo().getTransformar().rotarloA(angulo - desfase);
+
+		// Si se colisiona contra un bloque utiliza esquivarBloque() para tratar de
+		// esquivarlo
+		if (colisionBloque) {
+			cronometroMovimiento += GameLoop.dt;
+			esquivarBloque();
+
+			if (cronometroMovimiento > TIEMPO_CAMBIO_DIRECCION) {
+				cronometroMovimiento = 0;
+				colisionBloque = false;
+			}
+
+		} else {
+			moverHaciaJugador(posicionJugador, posicionEnemigo);
+			for (int i = 0; i < listaBloques.length; i++) {
+				if (listaBloques[i] != null) {
+					// Si colisiona contra un bloque decide aleatoriamente entre las dos mejores
+					// direcciones para esquivar el bloque en base a su direccion
+					if (super.getCuerpo().getColisiona().colisionaCon(listaBloques[i].getColisiona())) {
+						colisionBloque = true;
+
+						if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.LEFT) {
+							min = 1;
+							max = 3;
+						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.RIGHT) {
+							min = 3;
+							max = 5;
+						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.UP) {
+							min = 5;
+							max = 7;
+						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.DOWN) {
+							min = 7;
+							max = 9;
+						}
+					}
+				}
+			}
+
+		}
+	}
+	
+	public Vector2D getPosicionJugador() {
+		return posicionJugador;
+	}
+
+	public void setPosicionJugador(Vector2D posicionJugador) {
+		this.posicionJugador = posicionJugador;
+	}
+
+	public Bloque[] getListaBloques() {
+		return listaBloques;
+	}
+
+	public void setListaBloques(Bloque[] listaBloque) {
+		this.listaBloques = listaBloque;
+	}
+
+	public void moverHaciaJugador(Vector2D posicionJugador, Vector2D posicion) {
+
+		// Calcula las distancias el jugador y el enemigo
+		diferenciaX = posicionJugador.getX() - posicion.getX();
+		diferenciaY = posicionJugador.getY() - posicion.getY();
+
+		// Calcula que distancia es mayor
+		double TotaldiferenciaX;
+		if (diferenciaX >= 0) {
+			TotaldiferenciaX = diferenciaX;
+		} else {
+			TotaldiferenciaX = -diferenciaX;
+		}
+
+		double totalDiferenciaY;
+		if (diferenciaY >= 0) {
+			totalDiferenciaY = diferenciaY;
+		} else {
+			totalDiferenciaY = -diferenciaY;
+		}
+
+		// Decide en que direccion ir en base a que distancia es mas larga
+		if (TotaldiferenciaX > totalDiferenciaY) {
+			if (diferenciaX > 0) {
+				super.getCuerpo().getMovimiento().setDireccion(Vector2D.RIGHT); 
+			} else {
+				super.getCuerpo().getMovimiento().setDireccion(Vector2D.LEFT); 
+			}
+		} else {
+			if (diferenciaY > 0) {
+				super.getCuerpo().getMovimiento().setDireccion(Vector2D.DOWN); 
+			} else {
+				super.getCuerpo().getMovimiento().setDireccion(Vector2D.UP); 
+			}
+		}
+
+		atacar(); // El metodo atacar decide si el enemigo debe atacar quieto o moverse
+	}
+	
 	public void esquivarBloque() {
 		double velocidadEsquive = VELOCIDAD * 2;
 		double velocidadRetroceso = VELOCIDAD / 5;
-		
+
 		cronometroEsquivar += GameLoop.dt;
 
 		if (cronometroEsquivar > TIEMPO_CAMBIO_DIRECCION) {
@@ -123,127 +226,43 @@ public class EnemigoEspada extends Enemigo {
 		}
 	}
 
-	public void moverEnemigo() {
-
-		// Obtén la posición actual del enemigo
-		Vector2D posicionEnemigo = super.getCuerpo().getTransformar().getPosicion();
-
-		// Calculamos el ángulo hacia el jugador
-		double angulo = posicionEnemigo.getAnguloHacia(posicionJugador);
-		double desfase = 90;
-
-		// Ajustamos la rotación del enemigo para que siempre mire hacia el jugador
-		super.getCuerpo().getTransformar().rotarloA(angulo - desfase);
-
-		if (colisionBloque) {
-			cronometroMovimiento += GameLoop.dt;
-			esquivarBloque();
-
-			if (cronometroMovimiento > TIEMPO_CAMBIO_DIRECCION) {
-				cronometroMovimiento = 0;
-				colisionBloque = false;
-			}
-
-		} else {
-			moverHaciaJugador(posicionJugador, listaBloques, posicionEnemigo);
-			for (int i = 0; i < listaBloques.length; i++) {
-				if (listaBloques[i] != null) {
-					if (super.getCuerpo().getColisiona().colisionaCon(listaBloques[i].getColisiona())) {
-						colisionBloque = true;
-
-						if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.LEFT) {
-							min = 1;
-							max = 3;
-						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.RIGHT) {
-							min = 3;
-							max = 5;
-						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.UP) {
-							min = 5;
-							max = 7;
-						} else if (super.getCuerpo().getMovimiento().getDireccion() == Vector2D.DOWN) {
-							min = 7;
-							max = 9;
-						}
-					}
-				}
-			}
-			
-		}
-	}
-
-	public void moverHaciaJugador(Vector2D posicionJugador, Bloque[] bloque, Vector2D posicion) {
-
-		// Calcula las diferencias entre las posiciones del jugador y del enemigo
-		diferenciaX = posicionJugador.getX() - posicion.getX();
-		diferenciaY = posicionJugador.getY() - posicion.getY();
-
-		// Calculamos la diferencia absoluta para determinar el eje dominante
-		double absDiferenciaX;
-		if (diferenciaX >= 0) {
-			absDiferenciaX = diferenciaX;
-		} else {
-			absDiferenciaX = -diferenciaX;
-		}
-
-		double absDiferenciaY;
-		if (diferenciaY >= 0) {
-			absDiferenciaY = diferenciaY;
-		} else {
-			absDiferenciaY = -diferenciaY;
-		}
-
-		// Determina la dirección del movimiento basado en el eje de mayor diferencia
-		if (absDiferenciaX > absDiferenciaY) {
-			// Movimiento en el eje X
-			if (diferenciaX > 0) {
-				super.getCuerpo().getMovimiento().setDireccion(Vector2D.RIGHT); // Mover hacia la derecha
-			} else {
-				super.getCuerpo().getMovimiento().setDireccion(Vector2D.LEFT); // Mover hacia la izquierda
-			}
-		} else {
-			// Movimiento en el eje Y
-			if (diferenciaY > 0) {
-				super.getCuerpo().getMovimiento().setDireccion(Vector2D.DOWN); // Mover hacia abajo
-			} else {
-				super.getCuerpo().getMovimiento().setDireccion(Vector2D.UP); // Mover hacia arriba
-			}
-		}
-
-		atacar(); // El metodo atacar decidi si el enemigo debe atacar quieto o moverse
-	}
-
 	private int MovimientoRandom() {
-		return (int) (Math.random() * (max - min) + min); // Retorna un número aleatorio entre 1 y 4
+		return (int) (Math.random() * (max - min) + min);
 	}
-
-	public void movimiento() {
-		moverEnemigo();
-	}
-
+	
 	@Override
 	public void atacar() {
-		double distancia = diferenciaX * (diferenciaX) + (diferenciaY * diferenciaY);
+		// Calcula que tan lejos estan el enemigo y el jugador
+		double distancia = (diferenciaX * diferenciaX) + (diferenciaY * diferenciaY);
 
-		double rangoAtaque = 4000;
+		double rangoAtaque = 3500;
 
+		// Si el jugador esta en su rango de ataque el enemigo empieza la animacion de
+		// ataque y se queda quieto
 		if (distancia < rangoAtaque) {
 			super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(), 0);
-			if (super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoIzquierda) || super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoIzquierdaSlash)) {
-				cronometroCambioSprite += GameLoop.dt;
-				super.getCuerpo().setTextura(Assets.enemigoEspadaManoIzquierdaSlash);
-				if (cronometroCambioSprite > 500) {
-					super.getCuerpo().setTextura(Assets.enemigoEspadaManoDerecha);
-					cronometroCambioSprite = 0;
-				}
-				
-			} else if (super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoDerecha) || super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoDerechaSlash)) {
+			if (super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoIzquierda)
+					|| super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoIzquierdaSlash)) {
 				cronometroCambioSprite += GameLoop.dt;
 				super.getCuerpo().setTextura(Assets.enemigoEspadaManoDerechaSlash);
-				if (cronometroCambioSprite > 500) {
-					super.getCuerpo().setTextura(Assets.enemigoEspadaManoIzquierda);
+				if (cronometroCambioSprite > GameLoop.dt * 30) {
+					espada.play();
+					super.getCuerpo().setTextura(Assets.enemigoEspadaManoIzquierdaSlash);
+					cronometroCambioSprite = 0;
+				}
+
+			} else if (super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoDerecha)
+					|| super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoDerechaSlash)) {
+				cronometroCambioSprite += GameLoop.dt;
+				super.getCuerpo().setTextura(Assets.enemigoEspadaManoIzquierdaSlash);
+				if (cronometroCambioSprite > GameLoop.dt * 30) {
+					espada.play();
+					super.getCuerpo().setTextura(Assets.enemigoEspadaManoDerechaSlash);
 					cronometroCambioSprite = 0;
 				}
 			}
+			// Si el jugador no esta en su rango de ataque detiene su animacion y camina
+			// hacia el jugador
 		} else {
 			super.getCuerpo().getMovimiento().mover(super.getCuerpo().getTransformar(), VELOCIDAD);
 			if (super.getCuerpo().getTextura().equals(Assets.enemigoEspadaManoIzquierdaSlash)) {
@@ -252,21 +271,5 @@ public class EnemigoEspada extends Enemigo {
 				super.getCuerpo().setTextura(Assets.enemigoEspadaManoDerecha);
 			}
 		}
-	}
-
-	public Vector2D getPosicionJugador() {
-		return posicionJugador;
-	}
-
-	public void setPosicionJugador(Vector2D posicionJugador) {
-		this.posicionJugador = posicionJugador;
-	}
-
-	public Bloque[] getListaBloques() {
-		return listaBloques;
-	}
-
-	public void setListaBloques(Bloque[] listaBloque) {
-		this.listaBloques = listaBloque;
 	}
 }

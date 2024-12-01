@@ -36,13 +36,12 @@ public class EscenaNivel1 extends Scene {
 	private ListaEntidades listaBloques;
 	private ListaEntidades listaEnemigos;
 	private Gif romper;
-	double cronometro = 1200;
+	double cronometro = GameLoop.dt * 90;
 	private double cronometroCambioSprite;
 	private double cronometroPuntos = 0;
-	private boolean cambiandoSprite = false;
 	EnemigoEspada enemigo3;
 	private int cantidadEnemigos = 0;
-	
+
 	public EscenaNivel1() {
 		super();
 		romper = new Gif("Romper", Assets.romperFlecha, new Vector2D(0, 0), 100);
@@ -52,74 +51,69 @@ public class EscenaNivel1 extends Scene {
 		listaBloques = new ListaEntidades();
 		puntos = new SpriteText("100", new Color(50), Assets.font_minecraft, false);
 		fondoNivel = new SpriteSolido("Fondo", Assets.fondoCesped);
-		textoVidas = new SpriteText("x " + jugador.getNumeroVidas(), new Color(250, 250, 250), Assets.font_minecraft, false);
+		textoVidas = new SpriteText("x " + jugador.getNumeroVidas(), new Color(250, 250, 250), Assets.font_minecraft,
+				false);
 		textoVidas.setPosicion(new Vector2D(55, 35));
 		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
 		crearBloques();
 		crearEnemigos();
-		
 	}
 
 	@Override
 	public void actualizar() {
-		if (InputKeyboard.isKeyPressed(Key.SHIFT)) {
-			Scene.cambiarEscena(new EscenaBienvenida());
-		}
-		
-		fondoNivel.actualizar();
-		corazon.actualizar();
-		jugador.actualizar();
 		listaBloques.actualizar();
 		listaEnemigos.actualizar();
-		puntos.actualizar();
-		textoVidas.actualizar();
+		jugador.actualizar();
+		danoEnemigoAJugador();
+		danarJugador();
+		movimientoHaciaJugador();
 		romper.actualizar();
+		puntos.actualizar();
 		colisionBloqueJugador();
 		colisionFlechaJugador();
 		colisionBloqueEnemigo();
 		colisionEnemigoFlecha();
-		colisionJugadorEnemigo();
 		comprobarNivelCompletado();
-		movimientoHaciaJugador();
-
+		if (InputKeyboard.isKeyPressed(Key.SHIFT)) {
+			Scene.cambiarEscena(new EscenaBienvenida());
+		}
 	}
 
 	@Override
 	public void destruir() {
-
 	}
 
 	@Override
 	public void dibujar(Graphics g) {
 		fondoNivel.dibujar(g);
-		jugador.dibujar(g);
 		listaBloques.dibujar(g);
+		jugador.dibujar(g);
 		listaEnemigos.dibujar(g);
-		textoVidas.dibujar(g);
 		puntos.dibujar(g);
-		corazon.dibujar(g);
 		romper.dibujar(g);
+		textoVidas.dibujar(g);
+		corazon.dibujar(g);
 	}
 
 	public void crearEnemigos() {
 		EnemigoHechicero enemigo1 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
 		EnemigoHechicero enemigo2 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
 		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
-		
+
 		listaEnemigos.add("Enemigo", enemigo1);
 		listaEnemigos.add("Enemigo", enemigo2);
 		listaEnemigos.add("Enemigo", enemigo3);
-		
+
 		cantidadEnemigos = 3;
 	}
 
 	public void crearBloques() {
-		Bloque bloque1 = new Bloque(new Vector2D(Conf.WIDTH /2 - 50, Conf.HEIGHT / 2));
-		Bloque bloque2 = new Bloque(new Vector2D(Conf.WIDTH /2 - 50, Conf.HEIGHT / 2 + 80));
-		Bloque bloque3 = new Bloque(new Vector2D(Conf.WIDTH /2 - 50, Conf.HEIGHT / 2 - 80));
-		Bloque bloque4 = new Bloque(new Vector2D(Conf.WIDTH /2 - 50, Conf.HEIGHT / 2 + 160));
-		Bloque bloque5 = new Bloque(new Vector2D(Conf.WIDTH /2 - 50, Conf.HEIGHT / 2 - 160));
-		
+		Bloque bloque1 = new Bloque(new Vector2D(Conf.WIDTH / 2 - 50, Conf.HEIGHT / 2));
+		Bloque bloque2 = new Bloque(new Vector2D(Conf.WIDTH / 2 - 50, Conf.HEIGHT / 2 + 80));
+		Bloque bloque3 = new Bloque(new Vector2D(Conf.WIDTH / 2 - 50, Conf.HEIGHT / 2 - 80));
+		Bloque bloque4 = new Bloque(new Vector2D(Conf.WIDTH / 2 - 50, Conf.HEIGHT / 2 + 160));
+		Bloque bloque5 = new Bloque(new Vector2D(Conf.WIDTH / 2 - 50, Conf.HEIGHT / 2 - 160));
+
 		listaBloques.add("Bloque", bloque1);
 		listaBloques.add("Bloque", bloque2);
 		listaBloques.add("Bloque", bloque3);
@@ -143,10 +137,10 @@ public class EscenaNivel1 extends Scene {
 					enemigoAux.setListaBloques(listaBloquesAux);
 				}
 			}
-			
+
 		}
 	}
-	
+
 	public void comprobarNivelCompletado() {
 		int enemigosMuertos = 0;
 		for (int i = 0; i < listaEnemigos.getLength(); i++) {
@@ -161,83 +155,68 @@ public class EscenaNivel1 extends Scene {
 			}
 		}
 	}
-	
+
 	public void colisionBloqueJugador() {
 		for (int i = 0; i < listaBloques.getLength(); i++) {
 			if (listaBloques.get(i) != null) {
 				Bloque bloque = (Bloque) listaBloques.get(i);
 				if (jugador.getColisiona().colisionaCon(bloque.getColisiona())) {
-					jugador.jugadorColision(bloque);
+					jugador.colisionBloque(bloque);
 				}
 			}
 		}
 	}
 
-	public void colisionJugadorEnemigo() {
+	public void danoEnemigoAJugador() {
 		for (int i = 0; i < listaEnemigos.getAll().length; i++) {
-			if (listaEnemigos.get(i) != null) {
-				Enemigo enemigoAux = (Enemigo) listaEnemigos.get(i);
-				if (jugador.getColisiona().colisionaCon(enemigoAux.getColisiona()) || jugador.getColisiona().colisionaCon(enemigoAux.getAtaque().getColisiona())) {
-					if (enemigoAux.getViva()) {
-						cronometro += GameLoop.dt;
-						if (cronometro > 1200) {
-							// Reducción de vida y activación del estado de invulnerabilidad
-							System.out.println("Dano");
-							jugador.dano.play();
-							jugador.setNumeroVidas(jugador.getNumeroVidas() - 1);
-							textoVidas.setMensaje("x " + jugador.getNumeroVidas());
-
-							// Cambio al sprite de invulnerabilidad
-							jugador.getCuerpo().setTextura(Assets.jugadorInvencible);
-
-							// Reinicia el cronómetro de invulnerabilidad
-							cronometro = 0;
-
-							// Activa el temporizador del cambio de sprite
-							cambiandoSprite = true;
-							cronometroCambioSprite = 0; // Resetea el temporizador
-							if (jugador.getNumeroVidas() <= 0) {
-								Scene.cambiarEscena(new EscenaBienvenida());
-							}
-						}
-					}
-					
-					if (enemigoAux.getAtaque().getViva()) {
-						cronometro += GameLoop.dt;
-						if (cronometro > 1200) {
-							// Reducción de vida y activación del estado de invulnerabilidad
-							System.out.println("Dano");
-							jugador.dano.play();
-							jugador.setNumeroVidas(jugador.getNumeroVidas() - 1);
-							textoVidas.setMensaje("x " + jugador.getNumeroVidas());
-
-							// Cambio al sprite de invulnerabilidad
-							jugador.getCuerpo().setTextura(Assets.jugadorInvencible);
-
-							// Reinicia el cronómetro de invulnerabilidad
-							cronometro = 0;
-
-							// Activa el temporizador del cambio de sprite
-							cambiandoSprite = true;
-							cronometroCambioSprite = 0; // Resetea el temporizador
-							if (jugador.getNumeroVidas() <= 0) {
-								Scene.cambiarEscena(new EscenaBienvenida());
-							}
-						}
-					}
+			if (listaEnemigos.get(i) != null && listaEnemigos.get(i) instanceof EnemigoHechicero) {
+				EnemigoHechicero enemigoAux = (EnemigoHechicero) listaEnemigos.get(i);
+				if (jugador.getColisiona().colisionaCon(enemigoAux.getHechizo().getColisiona()) && enemigoAux.getHechizo().getViva()) {
+					cronometro += GameLoop.dt;
+					danarJugador();
+				}
+			} else if (listaEnemigos.get(i) instanceof EnemigoEspada) {
+				EnemigoEspada enemigoAux = (EnemigoEspada) listaEnemigos.get(i);
+				if (jugador.getColisiona().colisionaCon(enemigoAux.getColisiona()) && enemigoAux.getViva() == true) {
+					cronometro += GameLoop.dt;
+					danarJugador();
 				}
 			}
 		}
-		
-		if (cambiandoSprite) {
-	        cronometroCambioSprite += GameLoop.dt;
 
-	        if (cronometroCambioSprite > 1000) { 
-	        	jugador.dano.stop();
-	            jugador.getCuerpo().setTextura(Assets.jugador); // Vuelve al sprite normal
-	            cambiandoSprite = false; // Desactiva el cambio de sprite
-	        }
-	    }
+	}
+
+	public void danarJugador() {
+
+		if (cronometro > GameLoop.dt * 100 && jugador.getCuerpo().getTextura().equals(Assets.jugador)) {
+			// Reducción de vida y activación del estado de invulnerabilidad
+			jugador.getDano().play();
+			jugador.setNumeroVidas(jugador.getNumeroVidas() - 1);
+			textoVidas.setMensaje("x " + jugador.getNumeroVidas());
+
+			// Cambio al sprite de invulnerabilidad
+			jugador.getCuerpo().setTextura(Assets.jugadorInvencible);
+
+			// Reinicia el cronómetro de invulnerabilidad
+			cronometro = 0;
+
+			// Activa el temporizador del cambio de sprite
+			cronometroCambioSprite = 0; // Resetea el temporizador
+			if (jugador.getNumeroVidas() <= 0) {
+				Scene.cambiarEscena(new EscenaBienvenida());
+			}
+
+		}
+
+		if (jugador.getCuerpo().getTextura().equals(Assets.jugadorInvencible)) {
+			cronometroCambioSprite += GameLoop.dt;
+
+			if (cronometroCambioSprite > GameLoop.dt * 100) {
+				jugador.getDano().stop();
+				jugador.getCuerpo().setTextura(Assets.jugador); // Vuelve al sprite normal
+			}
+		}
+
 	}
 
 	public void colisionBloqueEnemigo() {
@@ -248,7 +227,7 @@ public class EscenaNivel1 extends Scene {
 						Bloque bloque = (Bloque) listaBloques.get(j);
 						Enemigo enemigoAux = (Enemigo) listaEnemigos.get(i);
 						if (enemigoAux.getColisiona().colisionaCon(bloque.getColisiona())) {
-							enemigoAux.colisionBloques(bloque);
+							enemigoAux.colisionBloque(bloque);
 						}
 					}
 				}
@@ -261,7 +240,7 @@ public class EscenaNivel1 extends Scene {
 		romper.getTransformar().rotarloA(f.getFlecha().getTransformar().getRotacion());
 		romper.setLoop(false);
 	}
-	
+
 	public void colisionFlechaJugador() {
 		for (int i = 0; i < jugador.listaFlechas.getAll().length; i++) {
 			if (jugador.listaFlechas.get(i) != null) {
@@ -272,7 +251,7 @@ public class EscenaNivel1 extends Scene {
 						if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
 							if (flechaAux.getViva()) {
 								animacionRomperFlecha(flechaAux);
-								flechaAux.romper();
+								flechaAux.destruir();
 								System.out.println("Bloque");
 							}
 						}
@@ -292,31 +271,29 @@ public class EscenaNivel1 extends Scene {
 						if (enemigoAux.getColisiona().colisionaCon(flechaAux.getColisiona())) {
 							if (enemigoAux.getViva() && flechaAux.getViva()) {
 								animacionRomperFlecha(flechaAux);
-								puntos.getTransformar().setPosicion(enemigoAux.getCuerpo().getTransformar().getPosicion());
+								puntos.getTransformar()
+										.setPosicion(enemigoAux.getCuerpo().getTransformar().getPosicion());
 								puntos.setVisible(true);
 								enemigoAux.recibirDano();
 								flechaAux.destruir();
 								flechaAux.setViva(false);
 							}
-							
+
 							cronometroPuntos += GameLoop.dt;
-							
-							if (cronometroPuntos > 600) {
+
+							if (cronometroPuntos > GameLoop.dt * 35) {
 								puntos.setVisible(false);
 								cronometroPuntos = 0;
 							}
-							
 						}
-						
 					}
 				}
 			}
 		}
 	}
 
-
 	public void siguienteNivel() {
-			Scene.cambiarEscena(new EscenaNivel2());
+		Scene.cambiarEscena(new EscenaNivel2());
 	}
 
 }

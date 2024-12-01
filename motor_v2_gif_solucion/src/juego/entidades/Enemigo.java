@@ -1,6 +1,7 @@
 package juego.entidades;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import juego.Assets;
@@ -17,20 +18,57 @@ import motor_v1.motor.util.Vector2D;
 public abstract class Enemigo extends Entidad {
 
 	public SpriteMovible cuerpo;
-	private SpriteMovible ataque;
 	private Sound blanco;
 	protected int movimientoE;
 	private int numeroVidas;
 	private boolean colision;
-	// private double crono;
 
-	public Enemigo(String nombre, SpriteMovible cuerpo, Vector2D posicion, SpriteMovible ataque) {
+	public Enemigo(SpriteMovible cuerpo, Vector2D posicion) {
 		super();
 		this.cuerpo = cuerpo;
-		this.ataque = ataque;
 		this.cuerpo.getTransformar().setPosicion(posicion);
 		blanco = new Sound(Assets.sonidoBlanco);
 		blanco.changeVolume(70);
+	}
+
+	public void actualizar() {
+		cuerpo.getColisiona().actualizar();
+		atacar();
+		movimiento();
+		colisionPantalla();
+		morir();
+	}
+
+	public void dibujar(Graphics g) {
+		cuerpo.dibujar(g);
+	}
+
+	public SpriteMovible getCuerpo() {
+		return cuerpo;
+	}
+
+	public void setCuerpo(SpriteMovible cuerpo) {
+		this.cuerpo = cuerpo;
+	}
+
+	public Collider getColisiona() {
+		return cuerpo.getColisiona();
+	}
+
+	public boolean isColision() {
+		return colision;
+	}
+
+	public void setColision(boolean colision) {
+		this.colision = colision;
+	}
+
+	public int getNumeroVidas() {
+		return numeroVidas;
+	}
+
+	public void setNumeroVidas(int numeroVidas) {
+		this.numeroVidas = numeroVidas;
 	}
 
 	public void colisionPantalla() {
@@ -58,7 +96,7 @@ public abstract class Enemigo extends Entidad {
 		}
 	}
 
-	public void colisionBloques(Bloque b) {
+	public void colisionBloque(Bloque b) {
 
 		double xEnemigo = cuerpo.getTransformar().getPosicion().getX();
 		double xB = b.getBloque().getTransformar().getPosicion().getX();
@@ -92,62 +130,14 @@ public abstract class Enemigo extends Entidad {
 		numeroVidas--;
 	}
 
-	public void actualizar() {
-		cuerpo.getColisiona().actualizar();
-		ataque.getColisiona().actualizar();
-		atacar();
-		movimiento();
-		colisionPantalla();
-		morir();
+	public void morir() {
+		if (numeroVidas == 0) {
+			destruir();
+			setViva(false);
+		}
 	}
 
 	public abstract void movimiento();
 
 	public abstract void atacar();
-
-	public void morir() {
-		if (numeroVidas == 0) {
-			destruir();
-			setViva(false);
-			ataque.setViva(false);
-		}
-	}
-
-	public SpriteMovible getCuerpo() {
-		return cuerpo;
-	}
-
-	public void setCuerpo(SpriteMovible cuerpo) {
-		this.cuerpo = cuerpo;
-	}
-
-	public Collider getColisiona() {
-		return cuerpo.getColisiona();
-	}
-
-	public SpriteMovible getAtaque() {
-		return ataque;
-	}
-
-	public void setAtaque(SpriteMovible ataque) {
-		this.ataque = ataque;
-	}
-
-	public boolean isColision() {
-		return colision;
-	}
-
-	public void setColision(boolean colision) {
-		this.colision = colision;
-	}
-
-	public int getNumeroVidas() {
-		return numeroVidas;
-	}
-
-	public void setNumeroVidas(int numeroVidas) {
-		this.numeroVidas = numeroVidas;
-	}
-
 }
-//{}

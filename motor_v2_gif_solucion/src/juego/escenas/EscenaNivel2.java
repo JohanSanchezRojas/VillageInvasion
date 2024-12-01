@@ -134,7 +134,7 @@ public class EscenaNivel2 extends Scene{
 			if (listaBloques.get(i) != null) {
 				Bloque bloque = (Bloque) listaBloques.get(i);
 				if (jugador.getColisiona().colisionaCon(bloque.getColisiona())) {
-					jugador.jugadorColision(bloque);
+					jugador.colisionBloque(bloque);
 				}
 			}
 		}
@@ -156,7 +156,7 @@ public class EscenaNivel2 extends Scene{
 						if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
 							if (flechaAux.getViva()) {
 								animacionRomperFlecha(flechaAux);
-								flechaAux.romper();
+								flechaAux.destruir();
 								System.out.println("Bloque");
 							}
 						}
