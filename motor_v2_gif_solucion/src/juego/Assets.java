@@ -53,14 +53,10 @@ public class Assets {
 	public static BufferedImage instrucciones;
 	public static BufferedImage titulo;
 
-	public static BufferedImage enemigoEUp;
-	public static BufferedImage enemigoEDown;
-	public static BufferedImage enemigoELeft;
-	public static BufferedImage enemigoERight;
-	public static BufferedImage enemigoTUp;
-	public static BufferedImage enemigoTDown;
-	public static BufferedImage enemigoTLeft;
-	public static BufferedImage enemigoTRight;
+	public static BufferedImage enemigoEspadaManoIzquierda;
+	public static BufferedImage enemigoEspadaManoDerecha;
+	public static BufferedImage enemigoEspadaManoIzquierdaSlash;
+	public static BufferedImage enemigoEspadaManoDerechaSlash;
 	public static BufferedImage enemigoHechicero;
 
 	public static BufferedImage[] explosionColision = new BufferedImage[7];
@@ -91,25 +87,20 @@ public class Assets {
 		jugador = Loader.cargarImagen("/assets_juego_disparos/jugador.png");
 		jugadorEspada = Loader.cargarImagen("/assets_juego_disparos/jugadorEspada.png");
 		jugadorInvencible = Loader.cargarImagen("/assets_juego_disparos/jugadorInvencible.png");
-		hechizo = Loader.cargarImagen("/assets_juego_disparos/hechizo.png");
 		madera = Loader.cargarImagen("/assets_juego_disparos/madera.png");
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
 		instrucciones = Loader.cargarImagen("/assets_juego_disparos/instrucciones.jpeg");
 		titulo = Loader.cargarImagen("/assets_juego_disparos/villageInvasion.png");
 
-		//Assets Enemigo Ballesta
-		enemigoEDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
-		enemigoEUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
-		enemigoELeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaIzquierda.png");
-		enemigoERight = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaDerecha.png");
-		enemigoHechicero = Loader.cargarImagen("/assets_juego_disparos/enemigoHechicero.png");
-
-		
 		//Assets Enemigo Espada
-//		enemigoTDown = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaFrente.png");
-//		enemigoTUp = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaEspalda.png");
-//		enemigoTLeft = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaIzquierda.png");
-//		enemigoTRight = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaDerecha.png");
+		enemigoEspadaManoIzquierda = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoIzquierda.png");
+		enemigoEspadaManoDerecha = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoDerecha.png");
+		enemigoEspadaManoIzquierdaSlash = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoIzquierdaSlash.png");
+		enemigoEspadaManoDerechaSlash = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoDerechaSlash.png");
+		
+		//Assets Enemigo Hechicero
+		enemigoHechicero = Loader.cargarImagen("/assets_juego_disparos/EnemigoHechicero.png");
+		hechizo = Loader.cargarImagen("/assets_juego_disparos/hechizo.png");
 		
 		for(int i = 0; i < explosionColision.length; i++) {
 			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");

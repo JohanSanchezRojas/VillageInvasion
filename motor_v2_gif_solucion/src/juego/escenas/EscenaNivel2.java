@@ -94,11 +94,11 @@ public class EscenaNivel2 extends Scene{
 		
 	}
 	public void crearEnemigos() {
-		EnemigoEspada enemigoE1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
-		EnemigoEspada enemigoE2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
+//		EnemigoEspada enemigoE1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
+//		EnemigoEspada enemigoE2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
 		
-		listaEnemigos.add("Enemigo", enemigoE1);
-		listaEnemigos.add("Enemigo", enemigoE2);
+//		listaEnemigos.add("Enemigo", enemigoE1);
+//		listaEnemigos.add("Enemigo", enemigoE2);
 		
 		cantidadEnemigos = 2;
 	}
