@@ -6,8 +6,11 @@ import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
 import juego.entidades.EnemigoProvisional;
+import juego.entidades.Flecha;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
+import motor_v1.motor.entidades.Gif;
+import motor_v1.motor.entidades.ListaEntidades;
 import motor_v1.motor.entidades.SpriteSolido;
 import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.Key;
@@ -16,15 +19,17 @@ import motor_v1.motor.util.Vector2D;
 public class EscenaNivel5 extends Scene{
 	private SpriteSolido fondoNivel;
 	private Jugador jugador;
-	private Bloque[] bloques = new Bloque[11];
 	private EnemigoProvisional[] bill = new EnemigoProvisional[3];
-
+	private ListaEntidades listaBloques;
+	private Gif romper;
 	
 	
 	
 	public EscenaNivel5() {
 		super();
-		
+		romper = new Gif("Romper", Assets.romperFlecha, new Vector2D(0, 0), 100);
+		romper.setVisible(false);
+		listaBloques = new ListaEntidades();
 		
 		Wallpaper();
 		crearJugador();
@@ -41,8 +46,9 @@ public class EscenaNivel5 extends Scene{
 		}
 		fondoNivel.actualizar();
 		jugador.actualizar();
-		actualizarBloques();
 		colisionBloqueJugador();
+		colisionFlechaJugador();
+		listaBloques.actualizar();
 		siguienteNivel(); 
 		
 	}
@@ -58,9 +64,8 @@ public class EscenaNivel5 extends Scene{
 		fondoNivel.dibujar(arg0);
 		jugador.dibujar(arg0);
 		jugador.getMira().dibujar(arg0);
-		dibujarBloques(arg0);
 		dibujarEnemigosProvisional(arg0);
-		
+		listaBloques.dibujar(arg0);
 		
 		
 		
@@ -87,27 +92,35 @@ public class EscenaNivel5 extends Scene{
 		int y3 = 0 + Conf.WOOD_LADO / 2;
 		
 		
-		for (int i = 0; i < bloques.length; i++) {
+		for (int i = 0; i < 11; i++) {
 			
 			if(i <= 4) {
 				Vector2D p = new Vector2D(Conf.WIDTH / 2.7, y);
-			
+				bloque = new Bloque(p);
+				bloque.getBloque().getTransformar().setPosicion(p.subtract(bloque.getBloque().getCentroRotacion()));
+				listaBloques.add("Bloque", bloque);
 				y = y + 80;
 			
 			}else if(i >= 5 && i <= 7){
 				Vector2D p = new Vector2D(Conf.WIDTH / 1.5, y3);
-				
+				bloque = new Bloque(p);
+				bloque.getBloque().getTransformar().setPosicion(p.subtract(bloque.getBloque().getCentroRotacion()));
+				listaBloques.add("Bloque", bloque);
 				y3 = y3 + 80;
 				
 				
 			}else if(i >= 8) {
 				Vector2D p = new Vector2D(Conf.WIDTH / 1.5, y2);
+				bloque = new Bloque(p);
+				bloque.getBloque().getTransformar().setPosicion(p.subtract(bloque.getBloque().getCentroRotacion()));
+				listaBloques.add("Bloque", bloque);
 				y2 = y2 - 80;
 			}
 			
 		}
 			
-			
+		
+		
 			
 			
 			
@@ -119,40 +132,44 @@ public class EscenaNivel5 extends Scene{
 	}
 	
 	public void colisionBloqueJugador() {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				if(jugador.getColisiona().colisionaCon(bloques[i].getColisiona())){
-					jugador.jugadorColision(bloques[i]);
-					
+		for (int i = 0; i < listaBloques.getLength(); i++) {
+			if (listaBloques.get(i) != null) {
+				Bloque bloque = (Bloque) listaBloques.get(i);
+				if (jugador.getColisiona().colisionaCon(bloque.getColisiona())) {
+					jugador.jugadorColision(bloque);
 				}
-				
 			}
-			
 		}
-		
 	}
 	
-	public void dibujarBloques(Graphics arg0) {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				bloques[i].dibujar(arg0);
-				
-			}
-			
-		}
-		
+
+	public void animacionRomperFlecha(Flecha f) {
+		romper = new Gif("Romper", Assets.romperFlecha, f.getFlecha().getTransformar().getPosicion(), 200);
+		romper.getTransformar().rotarloA(f.getFlecha().getTransformar().getRotacion());
+		romper.setLoop(false);
 	}
 	
-	public void actualizarBloques() {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				bloques[i].actualizar();;
-				
+	public void colisionFlechaJugador() {
+		for (int i = 0; i < jugador.listaFlechas.getAll().length; i++) {
+			if (jugador.listaFlechas.get(i) != null) {
+				Flecha flechaAux = (Flecha) jugador.listaFlechas.get(i);
+				for (int j = 0; j < listaBloques.getLength(); j++) {
+					if (listaBloques.get(j) != null) {
+						Bloque bloque = (Bloque) listaBloques.get(j);
+						if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
+							if (flechaAux.getViva()) {
+								animacionRomperFlecha(flechaAux);
+								flechaAux.romper();
+								System.out.println("Bloque");
+							}
+						}
+					}
+				}
 			}
-			
 		}
-		
 	}
+	
+	
 	
 	public void crearEnemigoProvisional() {
 		

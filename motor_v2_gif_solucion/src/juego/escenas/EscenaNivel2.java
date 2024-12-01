@@ -10,6 +10,7 @@ import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.Jugador;
 import juego.entidades.EnemigoProvisional;
+import juego.entidades.Flecha;
 import motor_v1.motor.Scene;
 import motor_v1.motor.entidades.Gif;
 import motor_v1.motor.entidades.ListaEntidades;
@@ -23,7 +24,6 @@ public class EscenaNivel2 extends Scene{
 	
 	private SpriteSolido fondoNivel;
 	private Jugador jugador;
-	private Bloque[] bloques = new Bloque[5];
 	private EnemigoProvisional[] bill = new EnemigoProvisional[2];
 	private SpriteSolido corazon;
 	private SpriteText puntos;
@@ -68,9 +68,10 @@ public class EscenaNivel2 extends Scene{
 		}
 		fondoNivel.actualizar();
 		jugador.actualizar();
-		actualizarBloques();
+		listaBloques.actualizar();
 		colisionBloqueJugador();
 		siguienteNivel(); 
+		colisionFlechaJugador();
 		
 	}
 
@@ -85,7 +86,7 @@ public class EscenaNivel2 extends Scene{
 		fondoNivel.dibujar(arg0);
 		jugador.dibujar(arg0);
 		jugador.getMira().dibujar(arg0);
-		dibujarBloques(arg0);
+		listaBloques.dibujar(arg0);
 		dibujarEnemigosProvisional(arg0);
 		
 		
@@ -116,51 +117,55 @@ public class EscenaNivel2 extends Scene{
 		Bloque bloque;
 		int y = (Conf.HEIGHT / 2) - 160;
 		
-		for (int i = 0; i < bloques.length; i++) {
+		for (int i = 0; i < 5; i++) {
 			
 			Vector2D p = new Vector2D(Conf.WIDTH / 2, y);
-			
+			bloque = new Bloque(p);
+			bloque.getBloque().getTransformar().setPosicion(p.subtract(bloque.getBloque().getCentroRotacion()));
+			listaBloques.add("Bloque", bloque);
 			
 			y = y + 80;
 		}
 		
+		
 	}
-	
 	public void colisionBloqueJugador() {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				if(jugador.getColisiona().colisionaCon(bloques[i].getColisiona())){
-					jugador.jugadorColision(bloques[i]);
-					
+		for (int i = 0; i < listaBloques.getLength(); i++) {
+			if (listaBloques.get(i) != null) {
+				Bloque bloque = (Bloque) listaBloques.get(i);
+				if (jugador.getColisiona().colisionaCon(bloque.getColisiona())) {
+					jugador.jugadorColision(bloque);
 				}
-				
 			}
-			
 		}
-		
 	}
 	
-	public void dibujarBloques(Graphics arg0) {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				bloques[i].dibujar(arg0);
-				
-			}
-			
-		}
-		
+	public void animacionRomperFlecha(Flecha f) {
+		romper = new Gif("Romper", Assets.romperFlecha, f.getFlecha().getTransformar().getPosicion(), 200);
+		romper.getTransformar().rotarloA(f.getFlecha().getTransformar().getRotacion());
+		romper.setLoop(false);
 	}
 	
-	public void actualizarBloques() {
-		for (int i = 0; i < bloques.length; i++) {
-			if(bloques[i] != null) {
-				bloques[i].actualizar();;
-				
+	public void colisionFlechaJugador() {
+		for (int i = 0; i < jugador.listaFlechas.getAll().length; i++) {
+			if (jugador.listaFlechas.get(i) != null) {
+				Flecha flechaAux = (Flecha) jugador.listaFlechas.get(i);
+				for (int j = 0; j < listaBloques.getLength(); j++) {
+					if (listaBloques.get(j) != null) {
+						Bloque bloque = (Bloque) listaBloques.get(j);
+						if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
+							if (flechaAux.getViva()) {
+								animacionRomperFlecha(flechaAux);
+								flechaAux.romper();
+								System.out.println("Bloque");
+							}
+						}
+					}
+				}
 			}
-			
 		}
-		
 	}
+	
 	
 	public void crearEnemigoProvisional() {
 		

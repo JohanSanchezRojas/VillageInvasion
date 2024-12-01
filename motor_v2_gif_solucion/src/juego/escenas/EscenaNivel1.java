@@ -287,17 +287,6 @@ public class EscenaNivel1 extends Scene {
 		}
 	}
 
-//	public void dibujarBloques(Graphics arg0) {
-//		for (int i = 0; i < listaBloques.getLength(); i++) {
-//			if (listaBloques.get(i) != null) {
-//				Bloque bloque = (Bloque) listaBloques.get(i);
-//				bloque.dibujar(arg0);
-//
-//			}
-//
-//		}
-//
-//	}
 
 	public void siguienteNivel() {
 			Scene.cambiarEscena(new EscenaNivel2());
