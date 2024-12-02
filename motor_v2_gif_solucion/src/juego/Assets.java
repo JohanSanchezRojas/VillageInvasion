@@ -1,4 +1,9 @@
 package juego;
+/**
+
+Johan David Sánchez Rojas C17305
+Joshua Chacón Alvarez C4E105
+Andrew Mora Mejia C05158*/
 /*
  * @version 08-05-2024
  * @author Denis Gonzalez Herrera

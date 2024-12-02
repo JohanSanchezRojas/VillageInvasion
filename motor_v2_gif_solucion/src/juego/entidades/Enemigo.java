@@ -1,5 +1,9 @@
 package juego.entidades;
+/**
 
+Johan David Sánchez Rojas C17305
+Joshua Chacón Alvarez C4E105
+Andrew Mora Mejia C05158*/
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
