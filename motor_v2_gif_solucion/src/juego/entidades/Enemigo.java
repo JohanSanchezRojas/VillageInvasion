@@ -71,29 +71,37 @@ public abstract class Enemigo extends Entidad {
 		this.numeroVidas = numeroVidas;
 	}
 
-	public void colisionPantalla() {
-
+	public boolean colisionPantalla() {
+		boolean colisionPantalla = false;
+		
 		double x = cuerpo.getTransformar().getPosicion().getX();
 		if (x < 0) {
 			cuerpo.getTransformar().getPosicion().setX(0);
 			colision = true;
+			colisionPantalla = true;
 		}
 
 		if (x > (Conf.WIDTH - Conf.ENEMIGO_WIDTH)) {
 			cuerpo.getTransformar().getPosicion().setX(Conf.WIDTH - Conf.ENEMIGO_WIDTH);
 			colision = true;
+			colisionPantalla = true;
 		}
 
 		double y = cuerpo.getTransformar().getPosicion().getY();
 		if (y < 0) {
 			cuerpo.getTransformar().getPosicion().setY(0);
 			colision = true;
+			colisionPantalla = true;
 		}
 
 		if (y > (Conf.HEIGHT - Conf.ENEMIGO_HEIGHT)) {
 			cuerpo.getTransformar().getPosicion().setY(Conf.WIDTH - Conf.ENEMIGO_HEIGHT);
 			colision = true;
+			colisionPantalla = true;
 		}
+		
+		
+		return colisionPantalla;
 	}
 
 	public void colisionBloque(Bloque b) {

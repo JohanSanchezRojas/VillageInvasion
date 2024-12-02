@@ -8,6 +8,7 @@ import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
 import juego.entidades.Enemigo;
+import juego.entidades.EnemigoArquero;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoProvisional;
@@ -99,12 +100,14 @@ public class EscenaNivel1 extends Scene {
 		EnemigoHechicero enemigo1 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
 		EnemigoHechicero enemigo2 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
 		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoArquero enemigo4 = new EnemigoArquero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
 
 		listaEnemigos.add("Enemigo", enemigo1);
 		listaEnemigos.add("Enemigo", enemigo2);
 		listaEnemigos.add("Enemigo", enemigo3);
+		listaEnemigos.add("Enemigo", enemigo4);
 
-		cantidadEnemigos = 3;
+		cantidadEnemigos = 4;
 	}
 
 	public void crearBloques() {
@@ -133,6 +136,20 @@ public class EscenaNivel1 extends Scene {
 							listaBloquesAux[j] = bloqueAux;
 						}
 					}
+					enemigoAux.setPosicionJugador(jugador.getCuerpo().getTransformar().getPosicion());
+					enemigoAux.setListaBloques(listaBloquesAux);
+				}
+				if (listaEnemigos.get(i) instanceof EnemigoArquero) {
+					EnemigoArquero enemigoAux = (EnemigoArquero) listaEnemigos.get(i);
+					Bloque[] listaBloquesAux = new Bloque[listaBloques.getSize()];
+					
+					for (int j = 0; j < listaBloques.getLength(); j++) {
+						if (listaBloques.get(j) != null) {
+							Bloque bloqueAux = (Bloque) listaBloques.get(j);
+							listaBloquesAux[j] = bloqueAux;
+						}
+					}
+					
 					enemigoAux.setPosicionJugador(jugador.getCuerpo().getTransformar().getPosicion());
 					enemigoAux.setListaBloques(listaBloquesAux);
 				}
@@ -180,6 +197,17 @@ public class EscenaNivel1 extends Scene {
 				if (jugador.getColisiona().colisionaCon(enemigoAux.getColisiona()) && enemigoAux.getViva() == true) {
 					cronometro += GameLoop.dt;
 					danarJugador();
+				}
+			} else if (listaEnemigos.get(i) instanceof EnemigoArquero) {
+				EnemigoArquero enemigoAux = (EnemigoArquero) listaEnemigos.get(i);
+				for (int j = 0; j < enemigoAux.getListaFlechas().getLength(); j++) {
+					Flecha flechaAux = (Flecha) enemigoAux.getListaFlechas().get(j);
+					if (flechaAux != null) {
+						if (jugador.getColisiona().colisionaCon(flechaAux.getColisiona()) && flechaAux.getViva() == true) {
+							cronometro += GameLoop.dt;
+							danarJugador();
+						}
+					}
 				}
 			}
 		}
@@ -253,6 +281,29 @@ public class EscenaNivel1 extends Scene {
 								animacionRomperFlecha(flechaAux);
 								flechaAux.destruir();
 								System.out.println("Bloque");
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		for (int i = 0; i < listaEnemigos.getLength(); i++) {
+			if (listaEnemigos.get(i) instanceof EnemigoArquero) {
+				EnemigoArquero enemigoAux = (EnemigoArquero) listaEnemigos.get(i);
+				for (int j = 0; j < enemigoAux.getListaFlechas().getLength(); j++) {
+					if (enemigoAux.getListaFlechas().get(j) != null) {
+						Flecha flechaAux = (Flecha) enemigoAux.getListaFlechas().get(j);
+						for (int k = 0; k < listaBloques.getLength(); k++) {
+							if (listaBloques.get(k) != null) {
+								Bloque bloque = (Bloque) listaBloques.get(k);
+								if (flechaAux.getColisiona().colisionaCon(bloque.getColisiona())) {
+									if (flechaAux.getViva()) {
+										animacionRomperFlecha(flechaAux);
+										flechaAux.destruir();
+										System.out.println("Bloque");
+									}
+								}
 							}
 						}
 					}

@@ -132,7 +132,6 @@ public class EnemigoHechicero extends Enemigo {
 	public void atacar() {
 		if (atacar) {
 			cronometroAtaque += GameLoop.dt;
-			System.out.println("Atacar");
 			if (cronometroAtaque > GameLoop.dt * 150) {
 				
 				sonidoHechizo.play();
@@ -145,7 +144,6 @@ public class EnemigoHechicero extends Enemigo {
 
 		if (cancelarAtaque) {
 			cronometroCancelarAtaque += GameLoop.dt;
-			System.out.println("Cancelar ataque");
 			if (cronometroCancelarAtaque > GameLoop.dt * 50) {
 				
 				sonidoHechizo.stop();
