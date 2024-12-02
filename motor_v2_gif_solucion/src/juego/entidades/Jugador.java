@@ -24,12 +24,17 @@ import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.InputMouse;
 import motor_v1.motor.util.Vector2D;
 
+/**
+Johan David Sánchez Rojas C17305
+Joshua Chacón Alvarez C4E105
+Andrew Mora Mejia C05158*/
 public class Jugador extends Entidad {
 	private SpriteMovible cuerpo;
 	private Sprite mira;
 	private Sound disparo;
 	private Sound dano;
 	private int numeroVidas;
+	private static int puntuacion = 0;
 	double cronometro = 0;
 	double cronometroDisparo = 1000;
 	public ListaEntidades listaFlechas;
@@ -67,6 +72,14 @@ public class Jugador extends Entidad {
 
 	@Override
 	public void destruir() {
+	}
+
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
 	}
 
 	public SpriteMovible getCuerpo() {
@@ -107,8 +120,7 @@ public class Jugador extends Entidad {
 
 	private void movimiento() {
 
-		//W
-		if (InputKeyboard.isDown(motor_v1.motor.input.Key.Q)) {
+		if (InputKeyboard.isDown(motor_v1.motor.input.Key.W)) {
 			cuerpo.getMovimiento().setDireccion(Vector2D.UP);
 			cuerpo.getMovimiento().mover(cuerpo.getTransformar(), Conf.JUGADOR_VELOCIDAD * GameLoop.dt);
 		} else if (InputKeyboard.isDown(motor_v1.motor.input.Key.A)) {

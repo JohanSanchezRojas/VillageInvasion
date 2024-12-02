@@ -23,7 +23,7 @@ import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
-public class EscenaNivel2 extends Niveles{
+public class EscenaNivel2 extends Nivel{
 	
 	public EscenaNivel2() {
 		super();

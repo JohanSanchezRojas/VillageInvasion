@@ -56,19 +56,15 @@ public class Flecha extends Entidad {
 
 	public void colisionPantalla() {
 		if (flecha.getTransformar().getPosicion().getX() > Conf.WIDTH + 30 - Conf.FLECHA_HEIGHT) {
-			System.out.println("1");
 
 			destruir();
 		} else if (flecha.getTransformar().getPosicion().getX() < -30) {
-			System.out.println("2");
 			destruir();
 		}
 
 		if (flecha.getTransformar().getPosicion().getY() > Conf.HEIGHT + 30 - Conf.FLECHA_WIDTH) {
-			System.out.println("3");
 			destruir();
 		} else if (flecha.getTransformar().getPosicion().getY() < -30) {
-			System.out.println("4");
 			destruir();
 		}
 	}

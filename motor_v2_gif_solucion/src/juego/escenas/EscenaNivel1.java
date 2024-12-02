@@ -1,6 +1,5 @@
 package juego.escenas;
 /**
-
 Johan David Sánchez Rojas C17305
 Joshua Chacón Alvarez C4E105
 Andrew Mora Mejia C05158*/
@@ -30,12 +29,7 @@ import motor_v1.motor.input.InputMouse;
 import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
-public class EscenaNivel1 extends Niveles {
-
-	
-
-	
-	
+public class EscenaNivel1 extends Nivel {
 	public EscenaNivel1() {
 		super();
 	}
@@ -66,17 +60,13 @@ public class EscenaNivel1 extends Niveles {
 		super.getListaBloques().add("Bloque", bloque5);
 	}
 	
-	
-	
-	
-
 	public void siguienteNivel() {
 		Scene.cambiarEscena(new EscenaNivel2());
 	}
 
 	@Override
 	public void crearJugador() {
-		super.setJugador(new Jugador(new Vector2D(150, Conf.HEIGHT / 2), 10000));
+		super.setJugador(new Jugador(new Vector2D(150, Conf.HEIGHT / 2), 10));
 		
 	}
 

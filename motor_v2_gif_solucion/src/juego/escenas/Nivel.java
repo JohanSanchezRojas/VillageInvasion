@@ -22,13 +22,18 @@ import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
-public abstract class Niveles extends Scene{
+/**
+Johan David Sánchez Rojas C17305
+Joshua Chacón Alvarez C4E105
+Andrew Mora Mejia C05158*/
+public abstract class Nivel extends Scene{
 	
 	private SpriteSolido fondoNivel;
 	private Jugador jugador;
 	private SpriteSolido corazon;
 	private SpriteText puntos;
 	private SpriteText textoVidas;
+	private SpriteText puntuacion;
 	private ListaEntidades listaBloques;
 	private ListaEntidades listaEnemigos;
 	private Gif romper;
@@ -37,7 +42,7 @@ public abstract class Niveles extends Scene{
 	private double cronometroCambioSprite;
 	private double cronometroPuntos = 0;
 	
-	public Niveles() {
+	public Nivel() {
 		
 		crearJugador();
 		fondoNivel = new SpriteSolido("Fondo", Assets.fondoCesped);
@@ -45,11 +50,13 @@ public abstract class Niveles extends Scene{
 		romper.setVisible(false);
 		listaEnemigos = new ListaEntidades();
 		listaBloques = new ListaEntidades();
-		puntos = new SpriteText("100", new Color(50), Assets.font_minecraft, false);
+		puntos = new SpriteText("100", new Color(250, 250, 250), Assets.font_minecraft, false);
 		fondoNivel = new SpriteSolido("Fondo", Assets.fondoCesped);
 		if(jugador != null) {
 			textoVidas = new SpriteText("x " + jugador.getNumeroVidas(), new Color(250, 250, 250), Assets.font_minecraft, false);
 			textoVidas.setPosicion(new Vector2D(55, 35));
+			puntuacion = new SpriteText("Puntaje: " + jugador.getPuntuacion(), new Color(250, 250, 250), Assets.font_minecraft, false);
+			puntuacion.setPosicion(new Vector2D(120, 35));
 		}
 		corazon = new SpriteSolido("Corazon", Assets.corazon, new Vector2D(10, 10));
 		crearJugador();
@@ -57,7 +64,6 @@ public abstract class Niveles extends Scene{
 		crearEnemigos();
 		
 	}
-	
 	
 
 	public Jugador getJugador() {
@@ -115,6 +121,7 @@ public abstract class Niveles extends Scene{
 		movimientoHaciaJugador();
 		romper.actualizar();
 		puntos.actualizar();
+		puntuacion.actualizar();
 		colisionBloqueJugador();
 		colisionFlechaJugador();
 		colisionBloqueEnemigo();
@@ -138,6 +145,7 @@ public abstract class Niveles extends Scene{
 		puntos.dibujar(g);
 		romper.dibujar(g);
 		textoVidas.dibujar(g);
+		puntuacion.dibujar(g);
 		corazon.dibujar(g);
 	}
 	
@@ -189,7 +197,6 @@ public abstract class Niveles extends Scene{
 				if (listaEnemigos.get(i).getViva() == false) {
 					enemigosMuertos++;
 					if (enemigosMuertos == cantidadEnemigos) {
-						System.out.println("Ganador");
 						siguienteNivel();
 					}
 				}
@@ -304,7 +311,6 @@ public abstract class Niveles extends Scene{
 							if (flechaAux.getViva()) {
 								animacionRomperFlecha(flechaAux);
 								flechaAux.destruir();
-								System.out.println("Bloque");
 							}
 						}
 					}
@@ -325,7 +331,6 @@ public abstract class Niveles extends Scene{
 									if (flechaAux.getViva()) {
 										animacionRomperFlecha(flechaAux);
 										flechaAux.destruir();
-										System.out.println("Bloque");
 									}
 								}
 							}
@@ -350,6 +355,8 @@ public abstract class Niveles extends Scene{
 										.setPosicion(enemigoAux.getCuerpo().getTransformar().getPosicion());
 								puntos.setVisible(true);
 								enemigoAux.recibirDano();
+								jugador.setPuntuacion(jugador.getPuntuacion() + 100);
+								puntuacion.setMensaje("Puntaje: " + jugador.getPuntuacion());
 								flechaAux.destruir();
 								flechaAux.setViva(false);
 							}

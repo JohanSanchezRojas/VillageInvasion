@@ -21,7 +21,7 @@ import motor_v1.motor.input.InputKeyboard;
 import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
-public class EscenaNivel4 extends Niveles{
+public class EscenaNivel4 extends Nivel{
 
 	
 	public EscenaNivel4() {
