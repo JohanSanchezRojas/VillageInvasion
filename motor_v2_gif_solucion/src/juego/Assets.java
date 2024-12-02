@@ -36,9 +36,7 @@ public class Assets {
 	 **********************************************************/
 
 	// AQUI SE CREAN LAS CONSTANTES PARA LAS IMAGENES DEL JUEGO  
-	public static BufferedImage canonTanque;
-	public static BufferedImage cuerpoTanque;
-	public static BufferedImage billBalazo;
+
 	public static BufferedImage mira;
 	public static BufferedImage fondoPuntaje;
 	public static BufferedImage fondoMinecraft;
@@ -51,7 +49,7 @@ public class Assets {
 	public static BufferedImage corazon;
 	public static BufferedImage instrucciones;
 	public static BufferedImage titulo;
-
+	public static BufferedImage mensajeFinal;
 	// Enemigo espada
 	public static BufferedImage enemigoEspadaManoIzquierda;
 	public static BufferedImage enemigoEspadaManoDerecha;
@@ -65,9 +63,6 @@ public class Assets {
 	// Enemigo arquero
 	public static BufferedImage enemigoArquero;
 
-	public static BufferedImage[] explosionColision = new BufferedImage[7];
-	public static BufferedImage[] explosionCanon = new BufferedImage[5];
-	public static BufferedImage[] humoDisparo = new BufferedImage[10];
 	public static BufferedImage[] slash = new BufferedImage[3];
 	public static BufferedImage[] flecha = new BufferedImage[3];
 	public static BufferedImage[] romperFlecha = new BufferedImage[4];
@@ -83,9 +78,7 @@ public class Assets {
 	public static boolean cargados() {
 		
 		// AQUI SE REALIZA LA CARGA DE LAS IMAGENES DEL JUEGO  
-		canonTanque = Loader.cargarImagen("/assets_juego_disparos/canonTanque.png");
-		cuerpoTanque = Loader.cargarImagen("/assets_juego_disparos/cuerpoTanque.png");
-		billBalazo = Loader.cargarImagen("/assets_juego_disparos/billBalazo.png");
+		
 		mira = Loader.cargarImagen("/assets_juego_disparos/mira.png");
 		fondoPuntaje = Loader.cargarImagen("/assets_juego_disparos/fondoPuntaje.png");
 		fondoMinecraft = Loader.cargarImagen("/assets_juego_disparos/fondoMinecraft.png");
@@ -97,7 +90,8 @@ public class Assets {
 		corazon = Loader.cargarImagen("/assets_juego_disparos/corazon.png");
 		instrucciones = Loader.cargarImagen("/assets_juego_disparos/instrucciones.jpeg");
 		titulo = Loader.cargarImagen("/assets_juego_disparos/villageInvasion.png");
-
+		mensajeFinal = Loader.cargarImagen("/assets_juego_disparos/MuchasGracias.png");
+		
 		//Assets Enemigo Espada
 		enemigoEspadaManoIzquierda = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoIzquierda.png");
 		enemigoEspadaManoDerecha = Loader.cargarImagen("/assets_juego_disparos/EnemigoEspadaManoDerecha.png");
@@ -110,18 +104,7 @@ public class Assets {
 		
 		//Assets Enemigo arquero
 		enemigoArquero = Loader.cargarImagen("/assets_juego_disparos/enemigoArquero.png");
-		
-		for(int i = 0; i < explosionColision.length; i++) {
-			explosionColision[i] = Loader.cargarImagen("/assets_juego_disparos/explosionColision/" + (i) +".png");
-		}		 
-
-		for(int i = 0; i < explosionCanon.length; i++) {
-			explosionCanon[i] = Loader.cargarImagen("/assets_juego_disparos/explosionCanon/" + (i) +".png");
-		}		 
-
-		for(int i = 0; i < humoDisparo.length; i++) {
-			humoDisparo[i] = Loader.cargarImagen("/assets_juego_disparos/humoDisparo/" + (i) +".png");
-		}		
+				
 		
 		for (int i = 0; i < slash.length; i++) {
 			slash[i] = Loader.cargarImagen("/assets_juego_disparos/slash/slash"+ (i) +".png");

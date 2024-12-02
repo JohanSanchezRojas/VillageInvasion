@@ -7,7 +7,6 @@ import juego.Conf;
 import juego.entidades.Bloque;
 import juego.entidades.EnemigoArquero;
 import juego.entidades.EnemigoEspada;
-import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
@@ -19,11 +18,7 @@ import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
 public class EscenaNivel4 extends Niveles{
-	
-	private EnemigoProvisional[] bill = new EnemigoProvisional[2];
-	
-	
-	
+
 	
 	public EscenaNivel4() {
 		super();
@@ -78,11 +73,6 @@ public class EscenaNivel4 extends Niveles{
 		
 	}
 	
-	public void crearEnemigoProvisional() {
-		
-		bill[0] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, 150));
-		bill[1] = new EnemigoProvisional(new Vector2D(100, 100));
-	}
 	
 	public void siguienteNivel() {
 		Scene.cambiarEscena(new EscenaNivel5());

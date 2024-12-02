@@ -11,7 +11,6 @@ import juego.entidades.Enemigo;
 import juego.entidades.EnemigoArquero;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.EnemigoHechicero;
-import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
 import motor_v1.motor.GameLoop;

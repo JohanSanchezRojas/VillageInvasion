@@ -8,7 +8,6 @@ import juego.entidades.Bloque;
 import juego.entidades.EnemigoArquero;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.EnemigoHechicero;
-import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
@@ -48,7 +47,7 @@ public class EscenaNivel9 extends Niveles{
 	}
 	
 	public void siguienteNivel() {
-		Scene.cambiarEscena(new EscenaBienvenida());
+		Scene.cambiarEscena(new EscenaNivelFinal());
 	}	
 
 	@Override

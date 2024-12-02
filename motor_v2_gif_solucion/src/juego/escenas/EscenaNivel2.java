@@ -9,7 +9,6 @@ import juego.entidades.Bloque;
 import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.Jugador;
-import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import motor_v1.motor.Scene;
 import motor_v1.motor.entidades.Gif;

@@ -7,7 +7,6 @@ import juego.Conf;
 import juego.entidades.Bloque;
 import juego.entidades.EnemigoEspada;
 import juego.entidades.EnemigoHechicero;
-import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
 import motor_v1.motor.Scene;
@@ -19,12 +18,7 @@ import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
 public class EscenaNivel8 extends Niveles{
-	
-	private EnemigoProvisional[] bill = new EnemigoProvisional[4];
-	
-	
-	
-	
+
 	public EscenaNivel8() {
 		super();
 		
@@ -73,15 +67,7 @@ public class EscenaNivel8 extends Niveles{
 			
 		}
 			
-			
-			
-			
-			
-		
-		
-		
-		
-		
+
 	}
 	
 	public void siguienteNivel() {
