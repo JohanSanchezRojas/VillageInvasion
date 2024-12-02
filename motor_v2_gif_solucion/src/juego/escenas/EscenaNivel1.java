@@ -38,17 +38,15 @@ public class EscenaNivel1 extends Niveles {
 	}
 
 	public void crearEnemigos() {
-		EnemigoHechicero enemigo1 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 100));
-		EnemigoHechicero enemigo2 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 100));
-		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
-		EnemigoArquero enemigo4 = new EnemigoArquero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
 
+		EnemigoEspada enemigo1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoEspada enemigo2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		
 		super.getListaEnemigos().add("Enemigo", enemigo1);
 		super.getListaEnemigos().add("Enemigo", enemigo2);
-		super.getListaEnemigos().add("Enemigo", enemigo3);
-		super.getListaEnemigos().add("Enemigo", enemigo4);
+;
 
-		super.setCantidadEnemigos(4);
+		super.setCantidadEnemigos(2);
 	}
 
 	public void crearBloques() {

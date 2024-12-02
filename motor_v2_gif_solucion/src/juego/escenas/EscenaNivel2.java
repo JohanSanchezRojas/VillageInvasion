@@ -22,17 +22,21 @@ import motor_v1.motor.util.Vector2D;
 
 public class EscenaNivel2 extends Niveles{
 	
-	private EnemigoProvisional[] bill = new EnemigoProvisional[2];
-	
 	public EscenaNivel2() {
 		super();
-		crearEnemigoProvisional();
 		
 	}
 	
 	public void crearEnemigos() {
+		EnemigoHechicero enemigo1 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoHechicero enemigo2 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoHechicero enemigo3 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 80));;
 		
-		super.setCantidadEnemigos(2);
+		super.getListaEnemigos().add("Enemigo", enemigo1);
+		super.getListaEnemigos().add("Enemigo", enemigo2);
+		super.getListaEnemigos().add("Enemigo", enemigo3);
+		
+		super.setCantidadEnemigos(3);
 	}
 	
 	public void crearJugador() {
@@ -58,22 +62,9 @@ public class EscenaNivel2 extends Niveles{
 	}
 	
 	public void siguienteNivel() {
-		
-		for (int i = 0; i < bill.length; i++) {
-			if(super.getJugador().getColisiona().colisionaCon(bill[i].getColisiona())) {
 				Scene.cambiarEscena(new EscenaNivel3());
-			}
-			
-		}
 		
 	}
 	
-
-	public void crearEnemigoProvisional() {
-		
-		bill[0] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) + 75));
-		bill[1] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) - 75));
-		
-	}
 	
 }

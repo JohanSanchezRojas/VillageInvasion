@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoArquero;
+import juego.entidades.EnemigoEspada;
+import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
@@ -17,11 +20,6 @@ import motor_v1.motor.input.Key;
 import motor_v1.motor.util.Vector2D;
 
 public class EscenaNivel9 extends Niveles{
-	
-	EnemigoProvisional[] bill = new EnemigoProvisional[4];
-	
-	
-	
 	
 	public EscenaNivel9() {
 		super();
@@ -48,14 +46,6 @@ public class EscenaNivel9 extends Niveles{
 		
 		
 	}
-	public void crearEnemigoProvisional() {
-		
-		bill[0] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, 100));
-		bill[1] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT - 100)));
-		bill[2] = new EnemigoProvisional(new Vector2D(100, 100));
-		bill[3] = new EnemigoProvisional(new Vector2D(100, (Conf.HEIGHT - 75)));
-		
-	}
 	
 	public void siguienteNivel() {
 		Scene.cambiarEscena(new EscenaBienvenida());
@@ -63,7 +53,23 @@ public class EscenaNivel9 extends Niveles{
 
 	@Override
 	public void crearEnemigos() {
-		// TODO Auto-generated method stub
+		EnemigoEspada enemigo1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoEspada enemigo2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoArquero enemigo4 = new EnemigoArquero (new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoArquero enemigo5 = new EnemigoArquero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoHechicero enemigo6 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoHechicero enemigo7 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		
+		super.getListaEnemigos().add("Enemigo", enemigo1);
+		super.getListaEnemigos().add("Enemigo", enemigo2);
+		super.getListaEnemigos().add("Enemigo", enemigo3);
+		super.getListaEnemigos().add("Enemigo", enemigo4);
+		super.getListaEnemigos().add("Enemigo", enemigo5);
+		super.getListaEnemigos().add("Enemigo", enemigo6);
+		super.getListaEnemigos().add("Enemigo", enemigo7);
+		
+		super.setCantidadEnemigos(7);
 		
 	}
 }

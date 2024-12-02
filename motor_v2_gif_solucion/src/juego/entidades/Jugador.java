@@ -107,7 +107,8 @@ public class Jugador extends Entidad {
 
 	private void movimiento() {
 
-		if (InputKeyboard.isDown(motor_v1.motor.input.Key.W)) {
+		//W
+		if (InputKeyboard.isDown(motor_v1.motor.input.Key.Q)) {
 			cuerpo.getMovimiento().setDireccion(Vector2D.UP);
 			cuerpo.getMovimiento().mover(cuerpo.getTransformar(), Conf.JUGADOR_VELOCIDAD * GameLoop.dt);
 		} else if (InputKeyboard.isDown(motor_v1.motor.input.Key.A)) {

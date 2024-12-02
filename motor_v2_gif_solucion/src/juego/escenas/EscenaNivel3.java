@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoEspada;
 import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
@@ -71,18 +72,21 @@ public class EscenaNivel3 extends Niveles{
 	}
 	
 	public void siguienteNivel() {
-		
-		for (int i = 0; i < bill.length; i++) {
-			if(super.getJugador().getColisiona().colisionaCon(bill[i].getColisiona())) {
-				Scene.cambiarEscena(new EscenaNivel4());
-			}
-			
-		}
-		
+				Scene.cambiarEscena(new EscenaNivel4());		
 	}
 
 	@Override
 	public void crearEnemigos() {
+		EnemigoHechicero enemigo1 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoHechicero enemigo2 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoHechicero enemigo3 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 80));;
+		EnemigoHechicero enemigo4 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 80));;
 		
+		super.getListaEnemigos().add("Enemigo", enemigo1);
+		super.getListaEnemigos().add("Enemigo", enemigo2);
+		super.getListaEnemigos().add("Enemigo", enemigo3);
+		super.getListaEnemigos().add("Enemigo", enemigo4);
+		
+		super.setCantidadEnemigos(4);
 	}
 }

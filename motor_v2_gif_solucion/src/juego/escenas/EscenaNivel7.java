@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoArquero;
+import juego.entidades.EnemigoEspada;
+import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
@@ -82,13 +85,22 @@ public class EscenaNivel7 extends Niveles{
 	
 	public void siguienteNivel() {
 		Scene.cambiarEscena(new EscenaNivel8());
-		
 	}
 
 
 	@Override
 	public void crearEnemigos() {
-		// TODO Auto-generated method stub
+		EnemigoEspada enemigo1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 120));
+		EnemigoEspada enemigo2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 120));
+		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 80));
+		EnemigoEspada enemigo4 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 80));
+		
+		super.getListaEnemigos().add("Enemigo", enemigo1);
+		super.getListaEnemigos().add("Enemigo", enemigo2);
+		super.getListaEnemigos().add("Enemigo", enemigo3);
+		super.getListaEnemigos().add("Enemigo", enemigo4);
+		
+		super.setCantidadEnemigos(4);
 		
 	}
 		

@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import juego.Assets;
 import juego.Conf;
 import juego.entidades.Bloque;
+import juego.entidades.EnemigoEspada;
+import juego.entidades.EnemigoHechicero;
 import juego.entidades.EnemigoProvisional;
 import juego.entidades.Flecha;
 import juego.entidades.Jugador;
@@ -81,14 +83,6 @@ public class EscenaNivel8 extends Niveles{
 		
 		
 	}
-	public void crearEnemigoProvisional() {
-		
-		bill[0] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) + 75));
-		bill[1] = new EnemigoProvisional(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) - 75));
-		bill[2] = new EnemigoProvisional(new Vector2D(100, (Conf.HEIGHT /2) + 75));
-		bill[3] = new EnemigoProvisional(new Vector2D(100, (Conf.HEIGHT /2) - 75));
-		
-	}
 	
 	public void siguienteNivel() {
 		Scene.cambiarEscena(new EscenaNivel9());
@@ -97,7 +91,21 @@ public class EscenaNivel8 extends Niveles{
 
 	@Override
 	public void crearEnemigos() {
-		// TODO Auto-generated method stub
+		EnemigoEspada enemigo1 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) + 75));
+		EnemigoEspada enemigo2 = new EnemigoEspada(new Vector2D(Conf.WIDTH - 150, (Conf.HEIGHT /2) + 75));
+		EnemigoEspada enemigo3 = new EnemigoEspada(new Vector2D(100, (Conf.HEIGHT /2) + 75));
+		EnemigoEspada enemigo4 = new EnemigoEspada(new Vector2D(100, (Conf.HEIGHT /2) - 75));
+		EnemigoHechicero enemigo5 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 + 80));;
+		EnemigoHechicero enemigo6 = new EnemigoHechicero(new Vector2D(Conf.WIDTH - 150, Conf.HEIGHT / 2 - 80));;
+		
+		super.getListaEnemigos().add("Enemigo", enemigo1);
+		super.getListaEnemigos().add("Enemigo", enemigo2);
+		super.getListaEnemigos().add("Enemigo", enemigo3);
+		super.getListaEnemigos().add("Enemigo", enemigo4);
+		super.getListaEnemigos().add("Enemigo", enemigo5);
+		super.getListaEnemigos().add("Enemigo", enemigo6);
+		
+		super.setCantidadEnemigos(6);
 		
 	}
 }
